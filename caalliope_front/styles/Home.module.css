@@ -8,8 +8,20 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+.bookItem {
+  display: block;
+  font-size: 20px;
+  color: #eaeaea;
+  max-width: 540px;
+}
+
+.carousel {
+  display: block;
+  border-top: 1px solid #fafafa;
   align-items: center;
+  justify-content: center;
 }
 
 .footer {
