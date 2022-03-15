@@ -13,19 +13,27 @@
 }
 
 .footer {
+  background-color: #212523;
+  color: #fafafa;
+  font-size: 20px;
   display: flex;
   flex: 1;
   padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid #fafafa;
+  align-content: center;
   justify-content: center;
-  align-items: center;
+}
+
+.footer a:hover {
+  font-weight: bold;
+  color: #d0bfff;
 }
 
 .footer a {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-grow: 1;
+  text-decoration: none;
+  list-style: none;
 }
 
 .title a {
