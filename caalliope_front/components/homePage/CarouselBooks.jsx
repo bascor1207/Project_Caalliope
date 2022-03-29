@@ -1,16 +1,11 @@
-const CarouselNewBook = ({books}) => {
+const CarouselNewBook = ({book}) => {
     return(
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="..." class="d-block w-100" alt="..."/>
+                    <img src={book.imageLinks.thumbnail} class="d-block w-100" alt="..."/>
                 </div>
-                <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="..."/>
-                </div>
-                <div class="carousel-item">
-                    <img src="..." class="d-block w-100" alt="..."/>
-                </div>
+                <a>{book.title}</a>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

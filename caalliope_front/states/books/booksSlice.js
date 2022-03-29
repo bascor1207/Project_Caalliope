@@ -1,30 +1,18 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-export const BooksSlice = createSlice({
-  name: 'BooksSlice',
-  initialState: {
-    newBook: '',
-    books: [],
-    error: null,
-  },
-  reducers: {
-    setNewBook: (state, action) => {
-      state.newBook = action.payload;
+export const fetchHeroes = createAsyncThunk(
+  'books/fetchBooks',
+  async (test, { rejectWithValue }) => {
+    try {
+      const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=');
+
+      if (!response.ok) {
+        throw new Error('An error occurred while fetching books.');
+      }
+
+      return await response.json();
+    } catch (e) {
+      return rejectWithValue(`Une erreur est survenue : ${e.message}`)
     }
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchBooks.pending, (state, action) => {
-        state.error = null;
-      })
-      .addCase(fetchBooks.fulfilled, (state, action) => {
-        state.books = action.payload;
-      })
-      .addCase(fetchBooks.rejected, (state, action) => {
-        state.error = action.payload;
-      })
   }
-})
-
-export const { setNewBook } = BooksSlice.actions;
-export default BooksSlice.reducer;
+)

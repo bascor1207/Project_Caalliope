@@ -1,20 +1,24 @@
-import BookItem from "../components/BookItem";
-import CarouselBooks from "../components/CarouselBooks";
-import styles from '../styles/Home.module.css';
+import BookItem from "../components/homePage/BookItem";
+import NewBookList from "../components/homePage/NewBookList";
+import TopBookList from "../components/homePage/TopBookList"
+
+const date = new Date().getFullYear();
 
 const HomePage = () => {
     return(
-        <div class="form_home">
-            <div class="suggest_audio">
-                < BookItem />
+        <Provider store={store}>
+            <div class="form_home">
+                <div className="bookItem">
+                    < AudioBook />
+                </div>
+                <div className="carousel_newBookList">
+                    < NewBookList  date={date}/>
+                </div>
+                <div className="carousel_topBookList">
+                    < TopBookList />
+                </div>
             </div>
-            <div className={styles.carousel}>
-                < CarouselBooks />
-            </div>
-            <div className={styles.carousel}>
-                < CarouselBooks />
-            </div>
-        </div>
+        </Provider>
     );
 }
 
