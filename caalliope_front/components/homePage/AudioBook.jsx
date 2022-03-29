@@ -13,7 +13,7 @@ const AudioBook = () => {
 
     useEffect(() => {
       setFilteredBooks(books);
-    }, [audioBook, books])
+    }, [books])
 
   return (
     <div className="bookitem">
