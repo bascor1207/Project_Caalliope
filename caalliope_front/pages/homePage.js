@@ -1,6 +1,9 @@
 import BookItem from "../components/homePage/BookItem";
 import NewBookList from "../components/homePage/NewBookList";
 import TopBookList from "../components/homePage/TopBookList"
+import AudioBook from "../components/homePage/AudioBook";
+import { Provider } from "react-redux";
+import store from "../states/store";
 
 const date = new Date().getFullYear();
 

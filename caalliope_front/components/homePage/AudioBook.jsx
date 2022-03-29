@@ -3,29 +3,25 @@ import {useDispatch, useSelector} from "react-redux";
 import BookItem from './BookItem';
 
 const AudioBook = () => {
-    const { newBook, book, error } = useSelector((store) => store.books);
-    const dispatch = useDispatch();
-    const [filteredBooks, setFilteredBooks] = useState([]);
+  const { books, error } = useSelector((store) => store.books);
+  const dispatch = useDispatch();
+  const [filteredBooks, setFilteredBooks] = useState([]);
   
     useEffect(() => {
       dispatch(fetchbooks());
     }, [])
-  
+
     useEffect(() => {
-      if (newBook != null) {
-        setFilteredBooks(
-          books.filter((book) => book.publishedDate.getFullYear().includes(date.getFullYear()))
-        );
-      }
-    }, [newBook, books])
+      setFilteredBooks(books);
+    }, [audioBook, books])
+
+  return (
+    <div className="bookitem">
+      {filteredBooks.map((book) => (
+        <BookItem key={book.id} books={book}/>
+      ))}
+    </div>
+  );
+};
   
-    return (
-      <div className="books-list">
-        {filteredBooks.map((book) => (
-          <BookItem key={book.id} book={book}/>
-        ))}
-      </div>
-    );
-  };
-  
-  export default NewBookList;
+export default AudioBook;

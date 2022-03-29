@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import CarouselBook from "./CarouselBooks"
 
 const NewBookList = ({date}) => {
     const { newBook, books, error } = useSelector((store) => store.books);
@@ -20,7 +21,7 @@ const NewBookList = ({date}) => {
   
     return (
       <div className="books-list">
-        {filteredBooks.map((books) => (
+        {filteredBooks.map((book) => (
           <CarouselBook key={book.id} books={book}/>
         ))}
       </div>
