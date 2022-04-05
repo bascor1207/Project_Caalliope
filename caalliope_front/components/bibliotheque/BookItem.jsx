@@ -17,15 +17,13 @@ const BookItem = ({book}) => {
                         <a href="">Acheter</a>
                         <button class="btn btn-outline-success" type="submit">Ajouter</button>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Statu
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">En cours</a></li>
-                                <li><a class="dropdown-item" href="#">Lus</a></li>
-                                <li><a class="dropdown-item" href="#">Abondonné</a></li>
-                                <li><a class="dropdown-item" href="#">Wishlist</a></li>
-                            </ul>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Status</option>
+                                <option value="1">En cours</option>
+                                <option value="2">Lus</option>
+                                <option value="3">Abandonné</option>
+                                <option value="4">Wishlist</option>
+                            </select>
                         </div>
                     </div>
                 </div>
