@@ -1,11 +1,13 @@
 import {useDispatch, useSelector} from "react-redux";
 import {setSearch} from "../../states/BooksSlice";
 
+const options = [];
+
 const searchBook = () => {
     const books = useSelector((store) => store.books);
     const dispatch = useDispatch();
 
-    const handleChange = (event) => {
+    const handleClick = (event) => {
         dispatch(setSearch(event.target.value))
     }
 
@@ -18,13 +20,17 @@ const searchBook = () => {
                     type="search" 
                     placeholder="Recherche" 
                     value={books.search}
-                    onChange={handleChange}
                     aria-label="Search"/>
 
-                    <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                    <button 
+                    class="btn btn-outline-success" 
+                    type="submit"
+                    onClick={handleClick}>
+                        Rechercher
+                    </button>
             
                     <div class="dropdown">
-                        <select class="form-select" aria-label="Default select example">
+                        <select class="form-select" value={books.genre} aria-label="Default select example">
                             <option selected>Genre</option>
                             <option value="1">Fantastique</option>
                             <option value="2">Science-fiction</option>
@@ -43,25 +49,12 @@ const searchBook = () => {
                     </div>
                     
                     <div class="dropdown">
-                        <select class="form-select" aria-label="Default select example">
+                        <select class="form-select" value={books.type} aria-label="Default select example">
                             <option selected>Type</option>
                             <option value="1">Roman</option>
                             <option value="2">BD</option>
                             <option value="3">Manga</option>
                         </select>
-                    </div>
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked/>
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Saga
-                        </label>
-                        </div>
-                        <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            One Shot
-                        </label>
                     </div>
                 </form>
             </div>

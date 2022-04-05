@@ -20,14 +20,18 @@ export const BooksSlice = createSlice({
     name: 'BooksSlice',
     initialState: {
     search: '',
+    genre: '',
+    type: '',
     books: [],
     loading: true,
     error: null,
     },
     reducers: {
-    setSearch: (state, action) => {
-        state.search = action.payload;
-    }
+        setSearch: (state, action) => {
+            state.search = action.payload;
+            state.genre = action.payload;
+            state.type = action.payload;
+        }
     },
     extraReducers: (builder) => {
     builder
