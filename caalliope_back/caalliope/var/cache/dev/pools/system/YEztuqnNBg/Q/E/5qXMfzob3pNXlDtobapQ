@@ -1,0 +1,3 @@
+<?php //App%255CEntity%255CEditer%2523getME
+
+return [PHP_INT_MAX, []];
