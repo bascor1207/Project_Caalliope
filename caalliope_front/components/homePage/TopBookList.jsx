@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-const NewBookList = () => {
-    const { search, books, loading, error } = useSelector((store) => store.books);
+const TopBookList = () => {
+    const { topBook, books, error } = useSelector((store) => store.books);
     const dispatch = useDispatch();
     const [filteredBooks, setFilteredBooks] = useState([]);
   
@@ -11,16 +11,20 @@ const NewBookList = () => {
     }, [])
   
     useEffect(() => {
-      
-    }, )
+      if (topBook != null) {
+        setFilteredBooks(
+          books.filter((book) => book.averageRating > 3.0)
+        );
+      }
+    }, [topBook, books])
   
     return (
       <div className="books-list">
-        {filteredBooks.map((books) => (
-          <CarouselNewBook key={book.id} books={books}/>
+        {filteredBooks.map((book) => (
+          <CarouselBook key={book.id} book={book}/>
         ))}
       </div>
     );
   };
   
-  export default NewBookList;
+  export default TopBookList;
