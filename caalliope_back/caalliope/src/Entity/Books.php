@@ -3,54 +3,111 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\BooksRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: BooksRepository::class)]
-#[ApiResource]
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\BooksRepository")
+ * 
+ * @ApiResource(
+ *  normalizationContext={"groups"={"book:read"}},
+ *  denormalizationContext={"groups"={"book:write"}}
+ * )
+ */
 class Books
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     *
+     * @Groups("book:read")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 13)]
+    /**
+     * @ORM\Column(type="string", length=13)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $ibsn;
 
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $cover;
 
-    #[ORM\Column(type: 'string', length: 60)]
+    /**
+     * @ORM\Column(type="string", length=60)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $title;
 
-    #[ORM\Column(type: 'date')]
+    /**
+     * @ORM\Column(type="date")
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $parution_date;
 
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $nb_pages;
 
-    #[ORM\ManyToOne(targetEntity: Genre::class, inversedBy: 'id_books')]
-    #[ORM\JoinColumn(nullable: false)]
+    /**
+     * @ORM\ManyToOne(targetEntity=Genre::class, inversedBy='id_books')
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $id_genre;
 
-    #[ORM\OneToMany(mappedBy: 'id_books', targetEntity: Saga::class)]
+    /**
+     * @ORM\OneToMany(mappedBy='id_books', targetEntity=Saga::class)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $saga;
 
-    #[ORM\ManyToMany(targetEntity: Authors::class, inversedBy: 'books')]
+    /**
+     * @ORM\ManyToOne(targetEntity=Authors::class, inversedBy='books')
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $id_author;
 
-    #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'books')]
-    #[ORM\JoinColumn(nullable: false)]
+    /**
+     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy='books')
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $id_status;
 
-    #[ORM\ManyToMany(targetEntity: Editer::class, mappedBy: 'id_books')]
+    /**
+     * @ORM\ManyToMany(targetEntity=Editer::class, mappedBy='id_books')
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $editers;
 
-    #[ORM\ManyToMany(targetEntity: Publier::class, mappedBy: 'id_books')]
+    /**
+     * @ORM\ManyToMany(targetEntity=Editer::class, mappedBy='id_books')
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups({"book:read", "book:write"})
+     */
     private $publiers;
 
     public function __construct()

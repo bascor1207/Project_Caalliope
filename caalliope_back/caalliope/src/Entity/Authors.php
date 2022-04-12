@@ -3,30 +3,57 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\AuthorsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AuthorsRepository::class)]
-#[ApiResource]
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\AuthorsRepository")
+ * 
+ * @ApiResource(
+ *  normalizationContext={"groups"={"author:read"}},
+ *  denormalizationContext={"groups"={"author:write"}}
+ * )
+ */
 class Authors
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     *
+     * @Groups("author:read")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 30)]
+    /**
+     * @ORM\Column(type="string", length=30)
+     *
+     * @Groups("author:read")
+     */
     private $first_name;
 
-    #[ORM\Column(type: 'string', length: 30)]
+    /**
+     * @ORM\Column(type="string", length=30)
+     *
+     * @Groups("author:read")
+     */
     private $last_name;
 
-    #[ORM\Column(type: 'string', length: 30, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     *
+     * @Groups("author:read")
+     */
     private $nationalite;
 
-    #[ORM\ManyToMany(targetEntity: Books::class, mappedBy: 'id_author')]
+    /**
+     * @ORM\ManyToMany(targetEntity=Books::class, mappedBy='id_author')
+     *
+     * @Groups("author:read")
+     */
     private $books;
 
     public function __construct()
