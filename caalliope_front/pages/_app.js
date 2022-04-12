@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import { Provider } from 'react-redux'
-import store from '../states/store'
+import {wrapper, store} from '../states/store'
 import Footer from '../components/Footer'
 
 function MyApp({ Component, pageProps }) {
@@ -15,4 +15,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
