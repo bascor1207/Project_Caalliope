@@ -1,0 +1,6 @@
+.sign-form-base {
+    display: flex;
+    flex-direction: column;
+    max-width: 450px;
+    width: 100%;
+  }

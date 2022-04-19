@@ -1,0 +1,21 @@
+.jumbo-subtitle {
+    font-size: 1.5rem;
+    font-weight: normal;
+    line-height: normal;
+    padding-right: 100px;
+  }
+  
+  @media (max-width: 950px) {
+    .jumbo-subtitle {
+      font-size: 1.25rem;
+      text-align: center;
+      padding-right: initial;
+    }
+  }
+  
+  @media (max-width: 550px) {
+    .jumbo-subtitle {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  }
