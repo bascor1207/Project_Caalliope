@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Enjoy on your browser.",
+    "subTitle": "Follow your progression on your smartphone, computer or tablet",
+    "direction": "row"
+  },
+  {
+    "id": 2,
+    "title": "Download your books to read on the go.",
+    "subTitle": "Save your data and see all your favourites offline.",
+    "direction": "row-reverse"
+  },
+  {
+    "id": 3,
+    "title": "Read everywhere.",
+    "subTitle": "Stream unlimited books and mangas or comics on your phone, tablet, laptop.",
+    "direction": "row"
+  }
+]

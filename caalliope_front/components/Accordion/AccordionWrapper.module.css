@@ -1,0 +1,14 @@
+.wrapper {
+    max-width: 815px;
+    margin: auto;
+    padding: 70px 45px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media (max-width: 550px) {
+    .wrapper {
+      max-width: initial;
+      padding: 70px 20px;
+    }
+  }

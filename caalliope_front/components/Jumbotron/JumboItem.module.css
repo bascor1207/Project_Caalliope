@@ -1,0 +1,14 @@
+.jumbo-item {
+    padding: 70px 5%;
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  @media (max-width: 950px) {
+    .jumbo-item {
+      flex-direction: column;
+    }
+  }
+  
