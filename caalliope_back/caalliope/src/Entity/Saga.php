@@ -3,29 +3,41 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\SagaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SagaRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'saga:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'saga:item']]],
+    normalizationContext: ['groups' => ['saga:read']],
+    denormalizationContext: ['groups' => ['saga:write']],
+    paginationEnabled: false,
+)]
 class Saga
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue()]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['saga:list', 'saga:item', 'saga:read'])]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 30)]
+    #[ORM\Column(type: 'integer', length: 30)]
+    #[Groups(['saga:list', 'saga:item', 'saga:read', 'saga:write'])]
     private $name;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['saga:list', 'saga:item', 'saga:read', 'saga:write'])]
     private $nb_tome;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['saga:list', 'saga:item', 'saga:read', 'saga:write'])]
     private $numero_tome;
 
     #[ORM\ManyToOne(targetEntity: Books::class, inversedBy: 'saga')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['saga:list', 'saga:item', 'saga:read', 'saga:write'])]
     private $id_books;
 
     public function getId(): ?int

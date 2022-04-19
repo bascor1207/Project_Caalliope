@@ -10,104 +10,68 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BooksRepository")
- * 
- * @ApiResource(
- *  normalizationContext={"groups"={"book:read"}},
- *  denormalizationContext={"groups"={"book:write"}}
- * )
- */
+#[ORM\Entity(repositoryClass: BooksRepository::class)]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'books:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'books:item']]],
+    normalizationContext: ['groups' => ['books:read']],
+    denormalizationContext: ['groups' => ['books:write']],
+    paginationEnabled: false,
+)]
 class Books
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     *
-     * @Groups("book:read")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['books:list', 'books:item', 'books:read'])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=13)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\Column(type: 'integer', length: 13)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $ibsn;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $cover;
 
-    /**
-     * @ORM\Column(type="string", length=60)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\Column(type: 'string', length: 60)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $title;
 
-    /**
-     * @ORM\Column(type="date")
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\Column(type: 'date')]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $parution_date;
 
-    /**
-     * @ORM\Column(type="integer")
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $nb_pages;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Genre::class, inversedBy='id_books')
-     * @ORM\JoinColumn(nullable=false)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\ManyToOne(targetEntity: Genre::class, inversedBy: 'id_books')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $id_genre;
 
-    /**
-     * @ORM\OneToMany(mappedBy='id_books', targetEntity=Saga::class)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\OneToMany(mappedBy: 'id_books', targetEntity: Saga::class)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $saga;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Authors::class, inversedBy='books')
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\ManyToOne(targetEntity: Authors::class, inversedBy: 'books')]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $id_author;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy='books')
-     * @ORM\JoinColumn(nullable=false)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $id_status;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Editer::class, mappedBy='id_books')
-     * @ORM\JoinColumn(nullable=false)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\ManyToMany(targetEntity: Editer::class, mappedBy: 'id_books')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $editers;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Editer::class, mappedBy='id_books')
-     * @ORM\JoinColumn(nullable=false)
-     *
-     * @Groups({"book:read", "book:write"})
-     */
+    #[ORM\ManyToMany(targetEntity: Editer::class, mappedBy: 'id_books')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['books:list', 'books:item', 'books:write', 'books:read'])]
     private $publiers;
 
     public function __construct()

@@ -8,88 +8,57 @@ use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
- * 
- * @ApiResource(
- *  normalizationContext={"groups"={"user:read"}},
- *  denormalizationContext={"groups"={"user:write"}}
- * )
- */
+#[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'users:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'users:item']]],
+    normalizationContext: ['groups' => ['users:read']],
+    denormalizationContext: ['groups' => ['users:write']],
+    paginationEnabled: false,
+)]
 class Users implements UserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     *
-     * @Groups("user:read")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['users:list', 'users:item', 'users:read'])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", unique=true, nullable=true)
-     *
-     * @Groups("user:read")
-     */
+    #[ORM\Column(type: 'string', unique: true, nullable: true)]
+    #[Groups(['users:list', 'users:item', 'users:read'])]
     private $apiToken;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    #[Groups(['users:list', 'users:item', 'users:read', 'users:write'])]
     private $avatar;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
+    #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['users:list', 'users:item', 'users:read', 'users:write'])]
     private $first_name;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
+    #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['users:list', 'users:item', 'users:read', 'users:write'])]
     private $last_name;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
+    #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['users:list', 'users:item', 'users:read', 'users:write'])]
     private $pseudo;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     * @var string The hashed password
-     *
-     * @Groups("user:read")
-     */
+    #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['users:list', 'users:item', 'users:read'])]
     private $password;
 
-    /**
-     * @Groups("user:write")
-     *
-     * @SerializedName("password")
-     */
+    #[SerializedName("password")]
+    #[Groups(['users:list', 'users:item', 'users:write'])]
     private $plainPassword;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
+    #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['users:list', 'users:item', 'users:read', 'users:write'])]
     private $email;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Books::class)
-     * @ORM\JoinColumn(nullable=false)
-     *
-     * @Groups({"user:read", "user:write"})
-     */
+    #[ORM\ManyToOne(targetEntity: Books::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['users:list', 'users:item', 'users:read'])]
     private $id_books;
 
     public function getId(): ?int
@@ -158,6 +127,11 @@ class Users implements UserInterface
         return $this->password;
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -187,6 +161,14 @@ class Users implements UserInterface
         $this->id_books = $id_books;
 
         return $this;
+    }
+
+    /**
+     * @See UserInterface
+     */
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
     }
 
     public function toArray() {

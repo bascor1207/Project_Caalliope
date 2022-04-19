@@ -3,24 +3,34 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\EditerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EditerRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'editer:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'editer:item']]],
+    normalizationContext: ['groups' => ['editer:read']],
+    denormalizationContext: ['groups' => ['editer:write']],
+    paginationEnabled: false,
+)]
 class Editer
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue()]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['editer:list', 'editer:item', 'editer:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['editer:list', 'editer:item', 'editer:read', 'editer:write'])]
     private $ME;
 
-    #[ORM\ManyToMany(targetEntity: Books::class, inversedBy: 'editers')]
+    #[ORM\ManyToMany(targetEntity: Books::class, mappedBy: 'editers')]
+    #[Groups(['editer:list', 'editer:item', 'editer:read', 'editer:write'])]
     private $id_books;
 
     public function __construct()

@@ -3,24 +3,34 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\StatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StatusRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'status:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'status:item']]],
+    normalizationContext: ['groups' => ['status:read']],
+    denormalizationContext: ['groups' => ['status:write']],
+    paginationEnabled: false,
+)]
 class Status
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue()]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['status:list', 'status:item', 'status:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 20)]
+    #[Groups(['status:list', 'status:item', 'status:read', 'status:write'])]
     private $book_status;
 
     #[ORM\OneToMany(mappedBy: 'id_status', targetEntity: Books::class)]
+    #[Groups(['status:list', 'status:item', 'status:read', 'status:write'])]
     private $books;
 
     public function __construct()

@@ -9,51 +9,36 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AuthorsRepository")
- * 
- * @ApiResource(
- *  normalizationContext={"groups"={"author:read"}},
- *  denormalizationContext={"groups"={"author:write"}}
- * )
- */
+#[ORM\Entity(repositoryClass: AuthorsRepository::class)]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'author:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'author:item']]],
+    normalizationContext: ['groups' => ['author:read']],
+    denormalizationContext: ['groups' => ['author:write']],
+    paginationEnabled: false,
+)]
 class Authors
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     *
-     * @Groups("author:read")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: 'integer')]
+    #[Groups(['author:list', 'author:item', 'author:read'])]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     *
-     * @Groups("author:read")
-     */
+    #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['author:list', 'author:item', 'author:read', 'author:write'])]
     private $first_name;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     *
-     * @Groups("author:read")
-     */
+    #[ORM\Column(type: 'string', length: 30)]
+    #[Groups(['author:list', 'author:item', 'author:read', 'author:write'])]
     private $last_name;
 
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     *
-     * @Groups("author:read")
-     */
+    #[ORM\Column(type: 'string', length: 30, nullable: true)]
+    #[Groups(['author:list', 'author:item', 'author:read', 'author:write'])]
     private $nationalite;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Books::class, mappedBy='id_author')
-     *
-     * @Groups("author:read")
-     */
+    #[ORM\ManyToMany(mappedBy: 'id_author', targetEntity: Books::class, orphanRemoval: true)]
+    #[Groups(['author:list', 'author:item', 'author:read', 'author:write'])]
     private $books;
 
     public function __construct()

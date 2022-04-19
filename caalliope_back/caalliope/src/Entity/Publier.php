@@ -3,27 +3,38 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\PublierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PublierRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'publier:list']]],
+    itemOperations: ['get' => ['normalization_context' => ['groups' => 'publier:item']]],
+    normalizationContext: ['groups' => ['publier:read']],
+    denormalizationContext: ['groups' => ['publier:write']],
+    paginationEnabled: false,
+)]
 class Publier
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue()]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['publier:list', 'publier:item', 'publier:read'])]
     private $id;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['publier:list', 'publier:item', 'publier:read', 'publier:write'])]
     private $prix;
 
     #[ORM\ManyToMany(targetEntity: Books::class, inversedBy: 'publiers')]
+    #[Groups(['publier:list', 'publier:item', 'publier:read', 'publier:write'])]
     private $id_books;
 
     #[ORM\ManyToMany(targetEntity: Format::class)]
+    #[Groups(['publier:list', 'publier:item', 'publier:read', 'publier:write'])]
     private $id_format;
 
     public function __construct()
