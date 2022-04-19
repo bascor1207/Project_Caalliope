@@ -1,28 +1,23 @@
-import NewBookList from "../components/homePage/NewBookList";
-import TopBookList from "../components/homePage/TopBookList"
-import AudioBook from "../components/homePage/AudioBook";
-import { Provider } from "react-redux";
-import store from "../states/store";
-import styles from '../styles/Home.module.css';
+import React from "react";
+import HeaderCompound from "../compounds/HeaderCompound";
+import OptFormCompound from "../compounds/OptFormCompound";
+import JumboCompound from "../compounds/JumboCompound";
+import Seperator from "../components/Seperator/Seperator";
+import AccordionCompound from "../compounds/AccordionCompound";
+import FooterCompound from "../compounds/FooterCompound";
 
-const date = new Date().getFullYear();
-
-const HomePage = () => {
-    return(
-        <Provider store={store}>
-            <div className={styles.main}>
-                <div className={styles.card}>
-                    < AudioBook />
-                </div>
-                <div className={styles.carousel}>
-                    < NewBookList  date={date}/>
-                </div>
-                <div className={styles.carousel}>
-                    < TopBookList />
-                </div>
-            </div>
-        </Provider>
-    );
+function HomePage() {
+  return (
+    <>
+      <HeaderCompound/>
+      <Seperator />
+      <JumboCompound />
+      <AccordionCompound />
+      <OptFormCompound />
+      <Seperator />
+      <FooterCompound />
+    </>
+  );
 }
 
 export default HomePage;

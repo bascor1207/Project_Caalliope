@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import { Provider } from 'react-redux'
 import {wrapper, store} from '../states/store'
-import Footer from '../components/Footer'
+import FooterWrapper from '../components/Footer/FooterWrapper';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
       <div className="wrapper">
         
         <Component {...pageProps} />
-        <Footer />
+        <FooterWrapper />
       </div>
     </Provider>
   );
