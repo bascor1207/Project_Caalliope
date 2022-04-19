@@ -1,6 +1,6 @@
 export const fetchBooks = async () => {
     try {
-      const response = await fetch('https://www.googleapis.com/books/v1/volumes?q={search terms}');
+      const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=search+terms&key=API_KEY');
   
       if (!response.ok) {
         throw new Error('An error occurred while fetching books.');
