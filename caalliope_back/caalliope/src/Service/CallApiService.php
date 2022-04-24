@@ -17,7 +17,7 @@ class CallApiService
     {
         $response = $this->client->request(
             'GET',
-            'https://www.goodreads.com/api' . $var
+            'https://www.googleapis.com/books/v1' . $var
         );
 
         return $response->toArray();

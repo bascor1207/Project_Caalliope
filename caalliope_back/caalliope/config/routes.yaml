@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+Book_list:
+    path: /books
+    controller: App\Controller\BooksController::index
+
+Authors_list:
+  path: /authors
+  controller: App`\Controller\AuthorsController::index
+
+authentication_token: 
+  path: /api/login
+  methods: ['POST']
