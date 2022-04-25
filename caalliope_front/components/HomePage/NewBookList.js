@@ -18,7 +18,7 @@ const NewBookList = ({date}) => {
           books.filter((book) => book.publishedDate.getFullYear().includes(date.getFullYear()))
         );
       }
-    }, [newBook, books])
+    }, [newBook, books, date])
   
     return (
       <div className="books-list">

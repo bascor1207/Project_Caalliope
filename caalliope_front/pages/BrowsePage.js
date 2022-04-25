@@ -5,7 +5,7 @@ import Logo from "../components/Header/Logo";
 import FeatureWrapper from "../components/Header/FeatureWrapper";
 import FeatureTitle from "../components/Header/FeatureTitle";
 import FooterCompound from "../compounds/FooterCompound";
-import SearchBookList from '../components/Books/bibliotheque/searchBookList';
+import SearchBookList from '../components/bibliotheque/searchBookList';
 
 function BrowsePage() {
   return (

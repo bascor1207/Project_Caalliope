@@ -7,7 +7,7 @@ function Logo() {
   return (
     <div>
       <Link href="/homePage" passHref>
-        <Image className={styles.logo} href="/" src='/../public/logo.png' alt=" logo" width="50" height="50"/>
+        <Image className={styles.logo} href="/" src='/../public/logo.png' alt=" logo" width="200" height="100"/>
       </Link>
     </div>
   );

@@ -8,13 +8,10 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useRouteMatch,
-  useParams,
 } from 'react-router-dom';
-import styles from '../styles/Home.module.css';
+
 
 const Home = () => {
-  const match = useRouteMatch();
   return (
     <Router>
       <Switch>

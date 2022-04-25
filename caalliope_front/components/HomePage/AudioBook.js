@@ -10,11 +10,11 @@ const AudioBook = () => {
   
     useEffect(() => {
       dispatch(fetchBooks());
-    }, [])
+    }, [dispatch]);
 
     useEffect(() => {
       setFilteredBooks(books);
-    }, [books])
+    }, [books]);
 
   return (
     <div className="bookitem">

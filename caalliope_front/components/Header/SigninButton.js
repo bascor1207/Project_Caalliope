@@ -1,12 +1,12 @@
+import Link from "next/link";
 import React from "react";
-import styles from './HeaderStyles.module.css';
 
-function SigninButton({ children, ...restProps }) {
+function SigninButton({}) {
   return (
     <div>
-      <a className={styles['play-button']} href="/signin" {...restProps}>
-        {children}
-      </a>
+       <Link href="/connectPage" passHref>
+          <span>Sign In</span>
+        </Link>
     </div>
   );
 }

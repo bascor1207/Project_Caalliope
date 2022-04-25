@@ -1,6 +1,9 @@
 import React from "react";
 import Logo from "./Logo";
 import { useAuth } from "../../context/authUserProvider";
+import SignInButton from "./SigninButton";
+import styles from './Navbar.module.scss';
+
 
 function NavBar({ children, ...restProps }) {
   const { autUser, loading } = useAuth();
@@ -27,16 +30,19 @@ function NavBar({ children, ...restProps }) {
   }
 
   return (
-  <div className="container">
+  <div className={styles.container}>
     <div className="col">
       <a href="#">
         <Logo/>
       </a>
     </div>
     <div className="col">
-      <a href="/browse"> 
-        <span> Bibliothèque </span>
-      </a>
+    <a href="/browse"> 
+      <span> Bibliothèque </span>
+    </a>
+    </div>
+    <div className="col">
+      <SignInButton/>
     </div>
     {isLog}
   </div>

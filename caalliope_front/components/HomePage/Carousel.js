@@ -37,14 +37,14 @@ export const Carousel = ({ onClickSlide, slides }) => {
   return slides?.length ? (
     <Slider {...settings}
       className={styles['main-carousel']}>
-      {slides.map((content, key) => (
-        <div key={key} onClick={() => onClickSlide(content, key)}>
+      {slides.map((book, key) => (
+        <div key={key} onClick={() => onClickSlide(book, key)}>
           <a href={content.urlDest} aria-label={content.alt}>
             <picture>
-              <source srcSet={content.imgXl} alt={content.alt} className={styles.imgXl} media="(min-width: 1441px)"/>
-              <source srcSet={content.imgL} alt={content.alt} className={styles.imgL} media="(min-width: 769px)"/>
+              <source srcSet={book.items.volumeInfo.imageLinks.thumbnail} alt={content.alt} className={styles.imgXl} media="(min-width: 1441px)"/>
+              <source srcSet={book.items.volumeInfo.imageLinks.thumbnail} alt={content.alt} className={styles.imgL} media="(min-width: 769px)"/>
               <source
-                srcSet={content.imgM}
+                srcSet={book.items.volumeInfo.imageLinks.thumbnail}
                 alt={content.alt}
                 className={styles.imgM}
                 media="(min-width: 480px)"

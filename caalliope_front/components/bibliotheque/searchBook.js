@@ -4,7 +4,7 @@ import {setSearch} from "../../states/BooksSlice";
 const options = [];
 
 const searchBook = () => {
-    const books = useSelector((store) => store.books);
+    const books = useSelector((storeConf) => storeConf.books);
     const dispatch = useDispatch();
 
     const handleClick = (event) => {
@@ -12,25 +12,25 @@ const searchBook = () => {
     }
 
     return(
-        <div class="card w-75">
-            <div class="card-body">
-                <form class="d-flex">
+        <div className="card w-75">
+            <div className="card-body">
+                <form className="d-flex">
                     <input 
-                    class="form-control me-2" 
+                    className="form-control me-2" 
                     type="search" 
                     placeholder="Recherche" 
                     value={books.search}
                     aria-label="Search"/>
 
                     <button 
-                    class="btn btn-outline-success" 
+                    className="btn btn-outline-success" 
                     type="submit"
                     onClick={handleClick}>
                         Rechercher
                     </button>
             
-                    <div class="dropdown">
-                        <select class="form-select" value={books.genre} aria-label="Default select example">
+                    <div className="dropdown">
+                        <select className="form-select" value={books.genre} aria-label="Default select example">
                             <option selected>Genre</option>
                             <option value="1">Fantastique</option>
                             <option value="2">Science-fiction</option>
@@ -48,8 +48,8 @@ const searchBook = () => {
                         </select>
                     </div>
                     
-                    <div class="dropdown">
-                        <select class="form-select" value={books.type} aria-label="Default select example">
+                    <div className="dropdown">
+                        <select className="form-select" value={books.type} aria-label="Default select example">
                             <option selected>Type</option>
                             <option value="1">Roman</option>
                             <option value="2">BD</option>

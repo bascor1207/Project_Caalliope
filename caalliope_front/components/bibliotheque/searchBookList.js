@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import CardBook from "./cardBook";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchBooks} from "../../states/BooksSlice";
+import {fetchBooks} from "../../states/BooksSlice.ts";
 
 const SearchBookList = () => {
   const { search, books, loading, error } = useSelector((store) => store.books);

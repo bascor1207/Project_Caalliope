@@ -1,41 +1,12 @@
-.navbar.desktop {
-    background-color: white;
-    border-bottom: 1px solid $grey30;
-    width: 100%;
-    padding: 0;
-    position: relative;
-    z-index: $z-index-menu;
-  
-    .millesima-navbar {
-      width: 100%;
-  
-      .no-row-margin {
-        @include no-row-margin;
-      }
-  
-      @media screen and (min-width: $xl) {
-        .no-col-padding {
-          @include no-col-padding;
-        }
-      }
-      .container-width {
-        max-width: 1600px;
-        
-        .millesima-menu {
-          width: 100%;
-          position: relative;
-  
-          .menu-container {
-            height: 70px;
-            display: flex;
-            align-items: center;
-  
-            .navbar-search {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #8672a5;
+
+  span {
+    font-size: 2.5rem;
+    font-style: oblique 4deg;
   }
-  
+}
