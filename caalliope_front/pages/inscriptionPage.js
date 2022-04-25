@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from '../context/authUserProvider';
 import HeaderWrapper from "../components/Header/HeaderWrapper";
@@ -10,30 +10,36 @@ import SignFormBase from "../components/SignForm/SignFormBase";
 import SignFormTitle from "../components/SignForm/SignFormTitle";
 import SignFormInput from "../components/SignForm/SignFormInput";
 import SignFormButton from "../components/SignForm/SignFormButton";
-import SignFormText from "../components/SignForm/SignFormText";
-import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormError from "../components/SignForm/SignFormError";
 import styles from '../components/Header/HeaderStyles.module.css';
 
-function ConnectForm() {
-  const { signInWithEmailAndPassword } = useAuth();
-  const router = useRouter();
-
+function SignUp() {
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const IsInvalid = password === "" || email === "";
+  const router = useRouter();
+
+  const { createUserWithEmailAndPassword } = useAuth();
+
+  const IsInvalid = nom === "" || prenom === "" || email === "" || password === "" || confirmPassword === "";
 
   const onSubmit = event => {
     setError(null)
-    signInWithEmailAndPassword(email, password)
-    .then(authUser => {
-      router.push("/homePage")
-    })
-    .catch(error => {
-      setError(error.message)
-    });
+    if(password === confirmPassword)
+      createUserWithEmailAndPassword(email, password)
+      .then(authUser => {
+        console.log("Success. The user is ceated in Firebase")
+        router.push("/homePage")
+      })
+      .catch(error => {
+        setError(error.message)
+      });
+    else 
+      setError("Password do not match")
     event.preventDefault();
   };
 
@@ -45,26 +51,41 @@ function ConnectForm() {
         </NavBar>
         <SignFormWrapper>
           <SignFormBase onSubmit={onSubmit} method="POST">
-            <SignFormTitle> Veuillez-vous identifier </SignFormTitle>
+            <SignFormTitle> Créer votre compte </SignFormTitle>
             {error ? <SignFormError>{error}</SignFormError> : null}
             <SignFormInput
               type="text"
-              placeholder="Email"
+              placeholder="nom"
+              value={nom}
+              onChange={({ target }) => setNom(target.value)}
+            />
+            <SignFormInput
+              type="text"
+              placeholder="prenom"
+              value={prenom}
+              onChange={({ target }) => setPrenom(target.value)}
+            />
+            <SignFormInput
+              type="text"
+              placeholder="email"
               value={email}
               onChange={({ target }) => setEmail(target.value)}
             />
             <SignFormInput
               type="password"
-              placeholder="Password"
+              placeholder="Mot de passe"
               autoComplete="off"
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
-            <SignFormButton disabled={IsInvalid} onSubmit={handleSubmit} onClick={handleClick}>Valider</SignFormButton>
-            <SignFormText>
-              Pas de compte ?
-              <SignFormLink href="/signup">Inscrivez-vous !</SignFormLink>
-            </SignFormText>
+            <SignFormInput
+              type="password"
+              placeholder="Confirmer votre mot de passe"
+              autoComplete="off"
+              value={confirmPassword}
+              onChange={({ target }) => setConfirmPassword(target.value)}
+            />
+            <SignFormButton disabled={IsInvalid}>S'incrire</SignFormButton>
           </SignFormBase>
         </SignFormWrapper>
       </HeaderWrapper>
@@ -73,4 +94,4 @@ function ConnectForm() {
   );
 }
 
-export default ConnectForm;
+export default SignUp;

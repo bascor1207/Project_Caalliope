@@ -1,16 +1,19 @@
 import '../styles/globals.css'
 import { Provider } from 'react-redux'
 import {wrapper, store} from '../states/store'
+import { AuthUserProvider } from '../firebase/context/authUserProvider';
 import FooterWrapper from '../components/Footer/FooterWrapper';
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <div className="wrapper">
-        
-        <Component {...pageProps} />
-        <FooterWrapper />
-      </div>
+      <AuthUserProvider>
+        <div className="wrapper">
+          
+          <Component {...pageProps} />
+          <FooterWrapper />
+        </div>
+      </AuthUserProvider>
     </Provider>
   );
 }
