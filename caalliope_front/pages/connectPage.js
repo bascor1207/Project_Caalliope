@@ -40,9 +40,7 @@ function ConnectForm() {
   return (
     <>
       <HeaderWrapper className={styles['header-wrapper-home']}>
-        <NavBar className={styles['navbar-sigin']}>
-          <Logo />
-        </NavBar>
+        <NavBar/>
         <SignFormWrapper>
           <SignFormBase onSubmit={onSubmit} method="POST">
             <SignFormTitle> Veuillez-vous identifier </SignFormTitle>

@@ -11,9 +11,7 @@ function BrowsePage() {
   return (
     <>
       <HeaderWrapper className={styles['header-wrapper-browse']}>
-        <NavBar className={styles['navbar-browse']}>
-        <Logo />
-        </NavBar>
+        <NavBar/>
         <FeatureWrapper>
         <FeatureTitle className={styles['feature-title-browse']}>
             Rechercher un livre
