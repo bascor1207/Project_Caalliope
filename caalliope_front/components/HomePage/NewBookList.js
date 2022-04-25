@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import Carousel from "./Carousel"
+import Carousel from "./Carousel";
+import {fetchBooks} from '../../states/BooksSlice.ts';
 
 const NewBookList = ({date}) => {
     const { newBook, books, error } = useSelector((storeConf) => storeConf.books) || {};
