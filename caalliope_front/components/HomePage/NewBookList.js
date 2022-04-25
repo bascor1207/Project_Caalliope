@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import CarouselBook from './CarouselBook';
+import Carousel from "./Carousel"
 
 const NewBookList = ({date}) => {
-    const { newBook, books, error } = useSelector((store) => store.books);
+    const { newBook, books, error } = useSelector((storeConf) => storeConf.books) || {};
     const dispatch = useDispatch();
     const [filteredBooks, setFilteredBooks] = useState([]);
   
@@ -22,7 +22,7 @@ const NewBookList = ({date}) => {
     return (
       <div className="books-list">
         {filteredBooks.map((book) => (
-          <CarouselBook key={book.id} books={book}/>
+          <Carousel key={book.id} books={book}/>
         ))}
       </div>
     );

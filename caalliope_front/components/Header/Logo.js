@@ -1,13 +1,14 @@
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import styles from './HeaderStyles.module.css';
 
-function Logo({ children, ...restProps }) {
+function Logo() {
   return (
     <div>
-      <a href="/" {...restProps}>
-        {children}
-        <img className={styles.logo} href="/" src="./images/misc/logo.svg" alt="Netflix logo" />
-      </a>
+      <Link href="/homePage" passHref>
+        <Image className={styles.logo} href="/" src='/../public/logo.png' alt=" logo" width="50" height="50"/>
+      </Link>
     </div>
   );
 }

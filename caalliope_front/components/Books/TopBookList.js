@@ -8,7 +8,7 @@ const TopBookList = () => {
     const [filteredBooks, setFilteredBooks] = useState([]);
   
     useEffect(() => {
-      dispatch(fetchbooks());
+      dispatch(fetchBooks());
     }, [])
   
     useEffect(() => {

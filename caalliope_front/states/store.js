@@ -3,21 +3,25 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createWrapper } from "next-redux-wrapper";
 import rootReducer from "./reducers/rootReducer";
+import { configureStore } from '@reduxjs/toolkit';
+import  BooksSlice  from './BooksSlice.ts';
 
 // initial states here
 const initalState = {};
-
 // middleware
 const middleware = [thunk];
-
 // creating store
 export const store = createStore(
   rootReducer,
   initalState,
-  composeWithDevTools(applyMiddleware(...middleware))
+  composeWithDevTools(applyMiddleware(...middleware)),
 );
-
+const storeConf = configureStore({
+  reducer: {
+    books: BooksSlice,
+  }
+});
 // assigning store to next wrapper
 const makeStore = () => store;
-
 export const wrapper = createWrapper(makeStore);
+export default storeConf;

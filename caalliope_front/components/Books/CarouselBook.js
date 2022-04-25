@@ -1,11 +1,12 @@
 import Image from "next/image";
 
+
 const CarouselNewBook = ({book}) => {
     return(
         <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
             <div className="carousel-inner">
                 <div className="carousel-item active">
-                    <img src={book.imageLinks.thumbnail} className="d-block w-100" alt="..."/>
+                    <Image src={book.imageLinks.thumbnail} className="d-block w-100" alt="..."/>
                 </div>
                 <a>{book.title}</a>
             </div>
@@ -20,5 +21,6 @@ const CarouselNewBook = ({book}) => {
         </div>
     );
 }
+
 
 export default CarouselNewBook;

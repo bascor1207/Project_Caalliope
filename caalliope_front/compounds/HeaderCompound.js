@@ -4,19 +4,18 @@ import NavBar from "../components/Header/NavBar";
 import SigninButton from "../components/Header/SigninButton";
 import FeatureWrapper from "../components/Header/FeatureWrapper";
 import FeatureTitle from "../components/Header/FeatureTitle";
+import SearchBook from "../components/Header/SearchBook";
+import Logo from '../components/Header/Logo';
 
 import styles from '../components/Header/HeaderStyles.module.css';
+import Link from "next/link";
 
 function HeaderCompound({ children }) {
   return (
     <HeaderWrapper className={styles['header-wrapper-home']}>
       <div>
+        <Logo/>
       <NavBar className={styles['navbar-home']}>
-        <div>
-          <button className={styles['home-button']}>Hello</button> 
-          <button className={styles['home-button']}>Hello</button> 
-          <button className={styles['home-button']}>Hello</button>
-        </div>
         <Link href="/connectPage" passHref>
           <SigninButton>Sign In</SigninButton>
         </Link>

@@ -7,7 +7,7 @@ const FirebaseCredentials = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
 }
 // if a Firebase instance doesn't exist, create one
-if (!Firebase.apps.length) {
+if (Firebase?.apps.length === 0) {
   Firebase.initializeApp(FirebaseCredentials)
 }
 

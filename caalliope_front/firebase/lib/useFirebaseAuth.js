@@ -39,7 +39,7 @@ export default function useFirebaseAuth() {
 
 // listen for Firebase state change
   useEffect(() => {
-    const unsubscribe = Firebase.auth().onAuthStateChanged(authStateChanged);
+    const unsubscribe = Firebase?.auth().onAuthStateChanged(authStateChanged);
     return () => unsubscribe();
   }, []);
 

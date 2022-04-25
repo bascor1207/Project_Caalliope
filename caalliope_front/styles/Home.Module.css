@@ -1,5 +1,6 @@
 .container {
   padding: 0 2rem;
+  background-color:#d0bfff
 }
 
 .main {
@@ -48,13 +49,4 @@
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.5;
-}
-
-.carousel {
-  
-}
-
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
 }
