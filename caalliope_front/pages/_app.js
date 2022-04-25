@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import { Provider } from 'react-redux'
 import {wrapper, store} from '../states/store'
-import { AuthUserProvider } from '../firebase/context/authUserProvider';
+import { AuthUserProvider } from '../context/authUserProvider';
 import FooterWrapper from '../components/Footer/FooterWrapper';
 
 function MyApp({ Component, pageProps }) {
