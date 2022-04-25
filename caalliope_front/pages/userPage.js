@@ -1,9 +1,8 @@
-import HeaderCompound from "../compounds/HeaderCompound";
 import Seperator from "../components/Seperator/Seperator";
-import FooterCompound from "../compounds/FooterCompound";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "../firebase/context/authUserProvider";
+import NavBar from "../components/Header/NavBar";
 
 const userPage = () => {
     const { autUser, loading } = useAuth();
@@ -16,11 +15,8 @@ const userPage = () => {
 
     return(
         <>
-            <HeaderCompound/>
+            <NavBar/>
             <Seperator />
-
-            <Seperator />
-            <FooterCompound />
         </>
     );
 }
