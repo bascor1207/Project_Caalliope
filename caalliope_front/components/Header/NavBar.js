@@ -44,7 +44,6 @@ function NavBar({ children, ...restProps }) {
     <div className="col">
       <SignInButton/>
     </div>
-    {isLog}
   </div>
   )
 }

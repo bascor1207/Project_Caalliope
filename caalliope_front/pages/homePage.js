@@ -10,7 +10,6 @@ function HomePage() {
   return (
     <>
       <HeaderCompound/>
-      <Seperator />
       <JumboCompound />
       <AccordionCompound />
       <Seperator />
