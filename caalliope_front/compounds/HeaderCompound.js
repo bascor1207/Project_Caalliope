@@ -17,7 +17,9 @@ function HeaderCompound({ children }) {
           <button className={styles['home-button']}>Hello</button> 
           <button className={styles['home-button']}>Hello</button>
         </div>
-        <SigninButton>Sign In</SigninButton>
+        <Link href="/connectPage" passHref>
+          <SigninButton>Sign In</SigninButton>
+        </Link>
       </NavBar>
       </div>
       <div>
