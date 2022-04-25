@@ -13,7 +13,6 @@ function HomePage() {
       <Seperator />
       <JumboCompound />
       <AccordionCompound />
-      <OptFormCompound />
       <Seperator />
       <FooterCompound />
     </>

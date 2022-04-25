@@ -18,7 +18,7 @@ const AudioBook = () => {
 
   return (
     <div className="bookitem">
-      {filteredBooks.map((book) => (
+      {filteredBooks?.map((book) => (
         <BookItem key={book.id} books={book}/>
       ))}
     </div>

@@ -1,7 +1,7 @@
 import Seperator from "../components/Seperator/Seperator";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "../firebase/context/authUserProvider";
+import { useAuth } from "../context/authUserProvider";
 import NavBar from "../components/Header/NavBar";
 
 const userPage = () => {
@@ -11,7 +11,7 @@ const userPage = () => {
     useEffect(() => {
         if (!loading && !autUser)
             router.push('/userPage')
-    }, [autUser, loading])
+    }, [autUser, loading]);
 
     return(
         <>
