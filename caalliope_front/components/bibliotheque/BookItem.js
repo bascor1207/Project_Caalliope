@@ -7,13 +7,13 @@ const BookItem = ({book}) => {
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">book.title</h5>
-                        <p class="card-text">book.authors</p>
-                        <p class="card-text">book.description</p>
-                        <p class="card-text">book.averageRating</p>
+                        <h5 class="card-title">{book.title}</h5>
+                        <p class="card-text">{book.authors}</p>
+                        <p class="card-text">{book.description}</p>
+                        <p class="card-text">{book.averageRating}</p>
                         <Rating name="rating" value="" />
-                        <p class="card-text">book.publisher</p>
-                        <p class="card-text">book.pageCount</p>
+                        <p class="card-text">{book.publisher}</p>
+                        <p class="card-text">{book.pageCount}</p>
                         <a href="">Acheter</a>
                         <button class="btn btn-outline-success" type="submit">Ajouter</button>
                         <div class="dropdown">
