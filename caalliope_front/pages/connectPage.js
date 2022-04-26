@@ -58,7 +58,7 @@ function ConnectForm() {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
-            <SignFormButton disabled={IsInvalid} onSubmit={handleSubmit} onClick={handleClick}>Valider</SignFormButton>
+            <SignFormButton disabled={IsInvalid} onSubmit={onSubmit} >Valider</SignFormButton>
             <SignFormText>
               Pas de compte ?
               <SignFormLink href="/signup">Inscrivez-vous !</SignFormLink>

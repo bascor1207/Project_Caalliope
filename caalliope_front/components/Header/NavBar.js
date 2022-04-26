@@ -4,7 +4,7 @@ import { useAuth } from "../../context/authUserProvider";
 import SignInButton from "./SigninButton";
 import styles from './Navbar.module.scss';
 import Link from "next/link";
-
+import Bibliotheque from '../../pages/BrowsePage';
 
 function NavBar({ children, ...restProps }) {
   const { autUser, loading } = useAuth();
@@ -33,17 +33,17 @@ function NavBar({ children, ...restProps }) {
   return (
   <div className={styles.container}>
     <div className="col">
-      <a href="#">
-        <Logo/>
-      </a>
+      <Link href="/">
+      <a><Logo/></a>
+      </Link>
     </div>
     <div className="col">
-    <a href="/browse"> 
-      <span> Bibliothèque </span>
-    </a>
+    <Link href="/BrowsePage" >
+      <a><span> Bibliothèque </span></a>
+    </Link>
     </div>
     <div className="col">
-      <SignInButton/>
+    <a><SignInButton/></a>
     </div>
   </div>
   )
