@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchBooks} from "../../states/BooksSlice.ts";
 
 const SearchBookList = () => {
-  const { search, books, loading, error } = useSelector((store) => store.books);
+  const { search, books, loading, error } = useSelector((storeConf) => storeConf.books);
   const dispatch = useDispatch();
   const [filteredBooks, setFilteredBooks] = useState([]);
 
