@@ -1,63 +1,39 @@
-import Image from 'next/image';
-import Slider from 'react-slick';
+import React, { Component } from 'react';
+import { Carousel } from 'react-responsive-carousel';
 
+export default class NextJsCarousel extends Component {
+	render() {
+		return (
+			<div>
+			<h2>NextJs Carousel - GeeksforGeeks</h2>
+			<Carousel>
+				<div>
+					<img src={book.items.volumeId.imageLinks.thumbnail} alt="image1"/>
+					<p className="legend">Image 1</p>
 
-export const Carousel = ({ onClickSlide, slides }) => {
-    const isSSR = () => typeof window === 'undefined';
-    const setSliderSettings = (products, options = {}) => {
-        const { count, withResponsive, isSsr, isLazyload = true, ...rest } = options;
-  
-        let slidesToShow = count || 4;
-        let infinite = true;
-  
-        switch (products?.length) {
-        case 1:
-        case 2:
-            slidesToShow = 2;
-            infinite = false;
-            break;
-            case 3:
-            case 4:
-            infinite = false;
-            break;
-        }
-    }
+				</div>
+				<div>
+					<img src={book.items.volumeId.imageLinks.thumbnail} alt="image2" />
+					<p className="legend">Image 2</p>
 
-    const getSettings = (isSsr) => ({
-    count: 1,
-    autoplay: true,
-    speed: 3000,
-    autoplaySpeed: 6000,
-    arrows: false,
-    dots: true,
-    isSsr
-});
+				</div>
+				<div>
+					<img src={book.items.volumeId.imageLinks.thumbnail}  alt="image3"/>
+					<p className="legend">Image 3</p>
 
-  const settings = setSliderSettings(null, getSettings(isSSR()));
-  return slides?.length ? (
-    <Slider {...settings}
-      className={styles['main-carousel']}>
-      {slides.map((book, key) => (
-        <div key={key} onClick={() => onClickSlide(book, key)}>
-          <a href={content.urlDest} aria-label={content.alt}>
-            <picture>
-              <source srcSet={book.items.volumeInfo.imageLinks.thumbnail} alt={content.alt} className={styles.imgXl} media="(min-width: 1441px)"/>
-              <source srcSet={book.items.volumeInfo.imageLinks.thumbnail} alt={content.alt} className={styles.imgL} media="(min-width: 769px)"/>
-              <source
-                srcSet={book.items.volumeInfo.imageLinks.thumbnail}
-                alt={content.alt}
-                className={styles.imgM}
-                media="(min-width: 480px)"
-                width="768px"
-                height="210px"
-              />
-              <Image className={styles['mil-bg']} src={books.img} alt={content.alt} loading={key > 0 ? 'lazy' : null} />
-            </picture>
-          </a>
-        </div>
-      ))}
-    </Slider>
-  ) : null;
+				</div>
+				<div>
+					<img src={book.items.volumeId.imageLinks.thumbnail}  alt="image4"/>
+					<p className="legend">Image 4</p>
+
+				</div>
+				<div>
+					<img src={book.items.volumeId.imageLinks.thumbnail} alt="image5"/>
+					<p className="legend">Image 5</p>
+
+				</div>
+			</Carousel>
+			</div>
+		);
+	}
 };
-
-export default Carousel;

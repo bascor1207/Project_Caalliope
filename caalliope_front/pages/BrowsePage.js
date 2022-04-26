@@ -3,7 +3,7 @@ import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import Logo from "../components/Header/Logo";
 import FeatureWrapper from "../components/Header/FeatureWrapper";
-import FeatureTitle from "../components/Header/FeatureTitle";
+import FeatureSubTitle from "../components/Header/FeatureSubTitle";
 import FooterCompound from "../compounds/FooterCompound";
 import SearchBookList from '../components/bibliotheque/searchBookList';
 
@@ -13,9 +13,9 @@ function BrowsePage() {
       <HeaderWrapper className={styles['header-wrapper-browse']}>
         <NavBar/>
         <FeatureWrapper>
-        <FeatureTitle className={styles['feature-title-browse']}>
+        <FeatureSubTitle className={styles['feature-title-browse']}>
             Rechercher un livre
-        </FeatureTitle>
+        </FeatureSubTitle>
         <SearchBookList />
         </FeatureWrapper>
       </HeaderWrapper>

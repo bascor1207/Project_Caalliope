@@ -181,6 +181,11 @@
 
 }
 
-.title{
-  margin-bottom: 3rem;
+.jumbo-title {
+  font-size: 3rem;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  color: white;
+  text-align: center;
 }
+

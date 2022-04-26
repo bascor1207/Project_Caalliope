@@ -1,6 +1,6 @@
 import React from "react";
 import BookItem from '../components/bibliotheque/BookItem';
-import FeatureTitle from "../components/Header/FeatureTitle";
+import FeatureSubTitle from "../components/Header/FeatureSubTitle";
 import FeatureWrapper from "../components/Header/FeatureWrapper";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import Logo from "../components/Header/Logo";
@@ -17,9 +17,9 @@ function BookInfoPage() {
                 <Logo />
                 </NavBar>
                 <FeatureWrapper>
-                <FeatureTitle className={styles['feature-title-browse']}>
+                <FeatureSubTitle className={styles['feature-title-browse']}>
                     Information sur le livre
-                </FeatureTitle>
+                </FeatureSubTitle>
                 <BookItem key={bookId} book={bookId} />
                 </FeatureWrapper>
             </HeaderWrapper>

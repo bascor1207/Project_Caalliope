@@ -23,7 +23,7 @@ const NewBookList = ({date}) => {
     return (
       <div className="books-list">
         {filteredBooks.map((book) => (
-          <Carousel key={book.id} books={book}/>
+          <Carousel key={book.items.id} books={book}/>
         ))}
       </div>
     );

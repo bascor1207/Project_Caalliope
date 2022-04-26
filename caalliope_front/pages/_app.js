@@ -9,7 +9,6 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <AuthUserProvider>
         <div className="wrapper">
-          
           <Component {...pageProps} />
           <FooterWrapper />
         </div>
