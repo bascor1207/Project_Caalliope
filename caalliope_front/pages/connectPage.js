@@ -61,7 +61,7 @@ function ConnectForm() {
             <SignFormButton disabled={IsInvalid} onSubmit={onSubmit} >Valider</SignFormButton>
             <SignFormText>
               Pas de compte ?
-              <SignFormLink href="/signup">Inscrivez-vous !</SignFormLink>
+              <SignFormLink href="/inscriptionPage">Inscrivez-vous !</SignFormLink>
             </SignFormText>
           </SignFormBase>
         </SignFormWrapper>

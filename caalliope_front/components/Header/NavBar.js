@@ -45,6 +45,9 @@ function NavBar({ children, ...restProps }) {
     <div className="col">
     <a><SignInButton/></a>
     </div>
+    <Link href="/inscriptionPage" passHref>
+    <a><span> Sing up </span></a>
+      </Link>
   </div>
   )
 }
