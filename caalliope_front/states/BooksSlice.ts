@@ -4,9 +4,9 @@ export const fetchBooks = createAsyncThunk(
     'books/fetchBooks',
     async (test, { rejectWithValue }) => {
     try {
-        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=search+terms&key=AIzaSyAo0g_07hgg3VLl_cWbJjzAbz8S3-Abkt4')
+        const response = await fetch('https://openlibrary.org/search.json?q=value&language=fre')
         if (!response.ok) {
-        throw new Error('An error occurred while fetching heroes.');
+        throw new Error('An error occurred while fetching book.');
         }
 
         return await response.json();

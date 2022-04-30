@@ -39,7 +39,7 @@ function NavBar({ children, ...restProps }) {
     </div>
     <div className="col">
     <Link href="/BrowsePage" >
-      <a><span> Bibliothèque </span></a>
+      <a><span> Library </span></a>
     </Link>
     </div>
     <div className={styles.sign}>

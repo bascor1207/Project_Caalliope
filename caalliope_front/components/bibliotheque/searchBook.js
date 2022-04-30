@@ -1,8 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {setSearch} from "../../states/BooksSlice";
 
-const options = [];
-
 const searchBook = () => {
     const books = useSelector((storeConf) => storeConf.books);
     const dispatch = useDispatch();
