@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from '../context/authUserProvider';
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
-import Logo from "../components/Header/Logo";
 import FooterCompound from "../compounds/FooterCompound";
 import SignFormWrapper from "../components/SignForm/SignFormWrapper";
 import SignFormBase from "../components/SignForm/SignFormBase";

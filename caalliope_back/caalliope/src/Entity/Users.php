@@ -44,10 +44,6 @@ class Users implements UserInterface
     #[Groups(['users:list', 'users:item', 'users:read', 'users:write'])]
     private $pseudo;
 
-    #[ORM\Column(type: 'string', length: 30)]
-    #[Groups(['users:list', 'users:item', 'users:read'])]
-    private $password;
-
     #[SerializedName("password")]
     #[Groups(['users:list', 'users:item', 'users:write'])]
     private $plainPassword;
@@ -103,18 +99,6 @@ class Users implements UserInterface
     public function setLastName(string $last_name): self
     {
         $this->last_name = $last_name;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
 
         return $this;
     }
@@ -177,7 +161,6 @@ class Users implements UserInterface
             'avatar' => $this->getAvatar(),
             'first_name' => $this->getFirstName(),
             'last_name' => $this->getLastName(),
-            'pseudo' => $this->getPseudo(),
             'password' => $this->getPassword(),
             'email' => $this->getEmail(),
             'id_books' => $this->getIdBooks(),

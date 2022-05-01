@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Link from 'next/link';
 
 const CardBook = ({book}) => {
     const [data, setData] = useState('');
@@ -23,7 +24,11 @@ const CardBook = ({book}) => {
                 </div>
                 <div className="col-md-8">
                     <div className="card-body">
-                        <h5 className="card-title">{book.title}</h5>
+                        {book.map((item) => (
+                            <Link href={`/browse/${encodeURIComponent(item.edition_key)}`}>
+                                <a><h5 className="card-title">{item.title}</h5></a>
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>

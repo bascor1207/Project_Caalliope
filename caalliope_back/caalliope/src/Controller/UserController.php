@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +27,6 @@ class UserController extends AbstractController
         $avatar = $data['avatar'];
         $first_name = $data['first_name'];
         $last_name = $data['last_name'];
-        $pseudo = $data['pseudo'];
         $password = $data['password'];
         $email = $data['email'];
         $id_books = $data['id_books'];
@@ -51,7 +48,6 @@ class UserController extends AbstractController
             'avatar' => $users->getAvatar(),
             'first_name' => $users->getFirstName(),
             'last_name' => $users->getLastName(),
-            'pseudo' => $users->getPseudo(),
             'password' => $users->getPassword(),
             'email' => $users->getEmail(),
             'id_books' => $users->getIdBooks(),
@@ -71,7 +67,6 @@ class UserController extends AbstractController
                 'avatar' => $user->getAvatar(),
                 'first_name' => $user->getFirstName(),
                 'last_name' => $user->getLastName(),
-                'pseudo' => $user->getPseudo(),
                 'password' => $user->getPassword(),
                 'email' => $user->getEmail(),
                 'id_books' => $user->getIdBooks(),
@@ -92,8 +87,6 @@ class UserController extends AbstractController
             $users->setFirstName($data['first_name']);
         empty($data['last_name']) ? true : 
             $users->setLastName($data['last_name']);
-        empty($data['pseudo']) ? true : 
-            $users->setPseudo($data['pseudo']);
         empty($data['password']) ? true : 
             $users->setPassword($data['password']);
         empty($data['email']) ? true : 

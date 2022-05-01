@@ -16,7 +16,7 @@ const BookItem = ({book}) => {
                 </div>
                 <div className="col-md-8">
                     <div className="card-body">
-                        <h5 className="card-title">{book.docs[0].title}</h5>
+                        <h5 className="card-title">{book.docs.title}</h5>
                         <button value="Ecouter l'extrait audio" onClick={handleClick}></button>
                     </div>
                 </div>

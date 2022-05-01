@@ -1,12 +1,31 @@
+import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setSearch} from "../../states/BooksSlice";
+import CardBook from "./cardBook";
 
 const searchBook = () => {
-    const books = useSelector((storeConf) => storeConf.books);
     const dispatch = useDispatch();
+    const [books, setBooks] = useState('');
+    const [search, setSearch] = useState('');
+    const [genre, setGenre] = useState('');
+    const [error, setError] = useState('');
 
-    const handleClick = (event) => {
-        dispatch(setSearch(event.target.value))
+    const handleChangeSearch = (event) => {
+        setSearch(event.target.value);
+    };
+
+    const handleChange = (event) => {
+        setGenre(event.target.value);
+    };
+
+    useEffect(() => {
+        fetch("http://openlibrary.org/search.json?q="+search+"&subject="+genre)
+        .then((response) => response.json())
+        .then((books) => setBooks(books))
+        .catch(setError)
+    }, []);
+
+    if (error) {
+        return <pre>{JSON.stringify(error, null, 2)}</pre>
     }
 
     return(
@@ -17,41 +36,37 @@ const searchBook = () => {
                     className="form-control me-2" 
                     type="search" 
                     placeholder="Recherche" 
-                    value={books.search}
+                    value={search}
+                    onChange={handleChangeSearch}
                     aria-label="Search"/>
 
                     <button 
                     className="btn btn-outline-success" 
                     type="submit"
-                    onClick={handleClick}>
+                    onClick={() => {
+                        books.map((book) => (
+                            <CardBook key={book.id} book={book}/>
+                        ))
+                    }}>
                         Rechercher
                     </button>
             
                     <div className="dropdown">
-                        <select className="form-select" value={books.genre} aria-label="Default select example">
-                            <option selected>Genre</option>
-                            <option value="1">Fantastique</option>
-                            <option value="2">Science-fiction</option>
-                            <option value="3">Romance</option>
-                            <option value="4">Historique</option>
-                            <option value="5">Thriller</option>
-                            <option value="6">Polars</option>
-                            <option value="7">Horreur</option>
-                            <option value="8">Feel-good</option>
-                            <option value="9">Aventure</option>
-                            <option value="10">Espionnage</option>
-                            <option value="11">Contemporain</option>
-                            <option value="12">Romance</option>
-                            <option value="13">Bit-lit</option>
-                        </select>
-                    </div>
-                    
-                    <div className="dropdown">
-                        <select className="form-select" value={books.type} aria-label="Default select example">
-                            <option selected>Type</option>
-                            <option value="1">Roman</option>
-                            <option value="2">BD</option>
-                            <option value="3">Manga</option>
+                        <select className="form-select" value={genre} aria-label="Default select example">
+                            <option selected onChange={handleChange}>Genre</option>
+                            <option value="1" onChange={handleChange}>Fantastique</option>
+                            <option value="2" onChange={handleChange}>Science-fiction</option>
+                            <option value="3" onChange={handleChange}>Romance</option>
+                            <option value="4" onChange={handleChange}>Historique</option>
+                            <option value="5" onChange={handleChange}>Thriller</option>
+                            <option value="6" onChange={handleChange}>Polars</option>
+                            <option value="7" onChange={handleChange}>Horreur</option>
+                            <option value="8" onChange={handleChange}>Feel-good</option>
+                            <option value="9" onChange={handleChange}>Aventure</option>
+                            <option value="10" onChange={handleChange}>Espionnage</option>
+                            <option value="11" onChange={handleChange}>Contemporain</option>
+                            <option value="12" onChange={handleChange}>Romance</option>
+                            <option value="13" onChange={handleChange}>Bit-lit</option>
                         </select>
                     </div>
                 </form>
