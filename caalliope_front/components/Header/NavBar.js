@@ -33,12 +33,12 @@ function NavBar({ children, ...restProps }) {
       <>
       <div className="col">
         <Link href="/userPage" passHref>
-          <span> Votre compte </span>
+          <span> My space </span>
         </Link>
       </div>
       <div className="col">
         <Link href="/deconnectPage" passHref>
-          <span> Se déconnecter </span>
+          <span> Sign out </span>
         </Link>
       </div>
       </>
