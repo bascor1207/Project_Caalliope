@@ -1,4 +1,4 @@
-import SuggestBookList from './suggestBookList';
+import SuggestList from './suggestList';
 
 const userAccueilCard = () => {
     return(
@@ -6,7 +6,7 @@ const userAccueilCard = () => {
             <div class="card-body">
                 <h5 class="card-title">Recommandation de livres</h5>
                 <a href="#" class="btn btn-primary">Actualiser</a>
-                < SuggestBookList />
+                < SuggestList />
             </div>
         </div>
     );

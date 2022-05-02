@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { Rating } from "@mui/material";
 
 const BookItem = ({book}) => {
     const [data, setData] = useState('');

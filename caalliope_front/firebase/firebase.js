@@ -1,6 +1,6 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import firebase, { initializeApp, getApps, getApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCYDHwNcQ4NXjcQuCNo1WW24ScBv9o2OCM",
@@ -12,16 +12,19 @@ const firebaseConfig = {
   measurementId: "G-ZS5VVC2DC1"
 };
 
-// Initialize Firebase
-if (firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+var firebaseApp = null;
 
-  const auth = firebase.auth();
-  const firestore = firebase.firestore();
+// Initialize Firebase
+if (!getApps().length) {
+  firebaseApp = initializeApp(firebaseConfig, "caalliope");
+} else {
+  firebaseApp = getApp();
 }
 
-const provider = new firebase.auth.GoogleAuthProvider();
+export const auth = getAuth(firebaseApp);
+export const firestore = getFirestore(firebaseApp);
+
+const provider = new GoogleAuthProvider();
 export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
 };
@@ -29,7 +32,7 @@ export const signInWithGoogle = () => {
 export const generateUserDocument = async (user, additionalData) => {
   if (!user) return;
 
-  const userRef = firestore.doc(`users/${user.uid}`);
+  const userRef = firestore().collection('users').doc(user.uid);
   const snapshot = await userRef.get();
 
   if (!snapshot.exists) {

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, signInWithGoogle } from "../firebase/firebase";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
@@ -13,7 +14,6 @@ import SignFormText from "../components/SignForm/SignFormText";
 import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormError from "../components/SignForm/SignFormError";
 import styles from '../components/Header/HeaderStyles.module.css';
-import { Button } from "@mui/material";
 import Link from "next/link";
 
 function ConnectForm() {
@@ -27,21 +27,22 @@ function ConnectForm() {
 
   const signInWithEmailAndPasswordHandler = (event,email, password) => {
     event.preventDefault();
-    auth.signInWithEmailAndPassword(email, password).catch(error => {
-    setError("Error signing in with password and email!");
-      console.error("Error signing in with password and email", error);
-    });
-  };
+    signInWithEmailAndPassword(auth, email, password)
+    .then((user) => {
+      console.log('User', user, 'logged!');
+      router.push("/homePage");
+    })
+    .catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
 
-  const onChangeHandler = (event) => {
-    const {name, value} = event.currentTarget;
-  
-    if(name === 'userEmail') {
-        setEmail(value);
-    }
-    else if(name === 'userPassword'){
-      setPassword(value);
-    }
+      if (errorCode === 'auth/wrong-password') {
+        alert("Wrong password!");
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+    });
   };
 
   return (
@@ -55,13 +56,15 @@ function ConnectForm() {
             <SignFormInput
               type="text"
               placeholder="Email"
-              onChange={(event) => onChangeHandler(event)}
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
             />
             <SignFormInput
               type="password"
               placeholder="Password"
               autoComplete="off"
-              onChange={(event) => onChangeHandler(event)}
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
             />
             <SignFormButton 
             onClick={(event) => {signInWithEmailAndPasswordHandler(event, email, password)}}>
@@ -74,7 +77,7 @@ function ConnectForm() {
               Login with Google
             </SignFormButton>
             <div>
-              <Link href="/reset">Forgot Password</Link>
+              <Link href="/reset">Forgot Password?</Link>
             </div>
             <SignFormText>
               Don't have an account ?

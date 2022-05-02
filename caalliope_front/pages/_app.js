@@ -1,5 +1,6 @@
 import '../styles/globals.css'
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import UserProvider from '../firebase/providers/userProvider';
 import {wrapper, store} from '../states/store';
 import FooterWrapper from '../components/Footer/FooterWrapper';
 

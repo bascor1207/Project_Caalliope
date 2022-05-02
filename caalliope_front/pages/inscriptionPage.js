@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { auth, signInWithGoogle, generateUserDocument } from "../firebase/firebase";
 import NavBar from "../components/Header/NavBar";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
@@ -13,7 +14,6 @@ import SignFormInput from "../components/SignForm/SignFormInput";
 import SignFormButton from "../components/SignForm/SignFormButton";
 import SignFormError from "../components/SignForm/SignFormError";
 import styles from '../components/Header/HeaderStyles.module.css';
-import { Button } from "@mui/material";
 
 function SignUp() {
   const [nom, setNom] = useState("");
@@ -29,11 +29,28 @@ function SignUp() {
   const createUserWithEmailAndPasswordHandler = async (event, email, password) => {
     event.preventDefault();
     try{
-      const {user} = await auth.createUserWithEmailAndPassword(email, password);
+      const {user} = await createUserWithEmailAndPassword(auth, email, password);
       generateUserDocument(user, {nom, prenom});
+
+      setPersistence(auth, browserSessionPersistence)
+        .then(() => {
+          return signInWithEmailAndPassword(auth, email, password);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+        })
+        console.log(error);
+
+      router.push("/homePage");
     }
     catch(error){
-      setError('Error Signing up with email and password');
+      var errorMessage = error.message;
+
+      alert(errorMessage);
+
+      console.log(error);
     }
       
     setEmail("");
@@ -41,22 +58,6 @@ function SignUp() {
     setNom("");
     setPrenom("");
   };
-
-  const onChangeHandler = event => {
-    const { name, value } = event.currentTarget;
-
-    if (name === "userEmail") {
-      setEmail(value);
-    } else if (name === "userPassword") {
-      setPassword(value);
-    } else if (name === "nom") {
-      setNom(value);
-    } else if (name === "prenom") {
-      setPrenom(value);
-    }
-  };
-
-
 
   return (
     <>
@@ -69,23 +70,27 @@ function SignUp() {
             <SignFormInput
               type="text"
               placeholder="lastname"
-              onChange={event => onChangeHandler(event)}
+              value={nom}
+              onChange={({ target }) => setNom(target.value)}
             />
             <SignFormInput
               type="text"
               placeholder="firstname"
-              onChange={event => onChangeHandler(event)}
+              value={prenom}
+              onChange={({ target }) => setPrenom(target.value)}
             />
             <SignFormInput
               type="text"
               placeholder="email"
-              onChange={event => onChangeHandler(event)}
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
             />
             <SignFormInput
               type="password"
               placeholder="Mot de passe"
               autoComplete="off"
-              onChange={event => onChangeHandler(event)}
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
             />
             <SignFormButton 
             onClick={event => {

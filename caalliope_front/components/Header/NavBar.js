@@ -1,20 +1,19 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
 import { auth } from "../../firebase/firebase";
-import { UserContext } from "../../firebase/providers/userProvider";
 import SignInButton from "./SigninButton";
 import styles from './Navbar.module.scss';
 import Link from "next/link";
+import { Button } from "@mui/material";
+import {logOut} from '../../pages/utilis/logOut';
 
 function NavBar({ children, ...restProps }) {
-  const user = useContext(UserContext);
   const [userLogged, setUserLogged] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      setUserLogged(true);
-    }
-  }, []);
+  const user = auth.currentUser;
+  if (user) {
+    setUserLogged(true);
+  }
 
   return (
   <div className={styles.container}>
@@ -48,7 +47,9 @@ function NavBar({ children, ...restProps }) {
           <span> My space </span>
         </Link>
       </div>
-      
+      <div className="col">
+          <Button onClick = {logOut}> Sign out </Button>
+      </div>
       </>
     )}
     </div>

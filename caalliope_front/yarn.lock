@@ -240,7 +240,7 @@
     "@firebase/util" "1.5.2"
     "tslib" "^2.1.0"
 
-"@firebase/app-compat@0.1.23", "@firebase/app-compat@0.x":
+"@firebase/app-compat@^0.1.23", "@firebase/app-compat@0.1.23", "@firebase/app-compat@0.x":
   "integrity" "sha512-c0QOhU2UVxZ7N5++nLQgKZ899ZC8+/ESa8VCzsQDwBw1T3MFAD1cG40KhB+CGtp/uYk/w6Jtk8k0xyZu6O2LOg=="
   "resolved" "https://registry.npmjs.org/@firebase/app-compat/-/app-compat-0.1.23.tgz"
   "version" "0.1.23"
