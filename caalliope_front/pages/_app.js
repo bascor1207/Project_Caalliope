@@ -6,12 +6,10 @@ import FooterWrapper from '../components/Footer/FooterWrapper';
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <AuthUserProvider>
         <div className="wrapper">
           <Component {...pageProps} />
           <FooterWrapper />
         </div>
-      </AuthUserProvider>
     </Provider>
   );
 }

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import BookItem from './BookItem';
 import ReactAudioPlayer from 'react-audio-player';
 import styles from './AudioBook.module.css';
 

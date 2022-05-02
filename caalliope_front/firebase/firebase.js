@@ -1,21 +1,6 @@
-import { initializeApp } from "firebase/app";
-import {
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-} from "firebase/auth";
-import {
-  getFirestore,
-  query,
-  getDocs,
-  collection,
-  where,
-  addDoc,
-} from "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCYDHwNcQ4NXjcQuCNo1WW24ScBv9o2OCM",
@@ -27,75 +12,52 @@ const firebaseConfig = {
   measurementId: "G-ZS5VVC2DC1"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+// Initialize Firebase
+if (firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 
-const signInWithGoogle = async () => {
-  try {
-    const res = await signInWithPopup(auth, googleProvider);
-    const user = res.user;
-    const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    const docs = await getDocs(q);
-    if (docs.docs.length === 0) {
-      await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        name: user.displayName,
-        authProvider: "google",
-        email: user.email,
+  const auth = firebase.auth();
+  const firestore = firebase.firestore();
+}
+
+const provider = new firebase.auth.GoogleAuthProvider();
+export const signInWithGoogle = () => {
+  auth.signInWithPopup(provider);
+};
+
+export const generateUserDocument = async (user, additionalData) => {
+  if (!user) return;
+
+  const userRef = firestore.doc(`users/${user.uid}`);
+  const snapshot = await userRef.get();
+
+  if (!snapshot.exists) {
+    const { email, lastname, firstname } = user;
+    try {
+      await userRef.set({
+        lastname,
+        email,
+        firstname,
+        ...additionalData
       });
+    } catch (error) {
+      console.error("Error creating user document", error);
     }
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
   }
+  return getUserDocument(user.uid);
 };
 
-const logInWithEmailAndPassword = async (email, password) => {
+const getUserDocument = async uid => {
+  if (!uid) return null;
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
-};
+    const userDocument = await firestore.doc(`users/${uid}`).get();
 
-const registerWithEmailAndPassword = async (lastname, firstname, email, password) => {
-  try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    const user = res.user;
-    await addDoc(collection(db, "users"), {
-      uid: user.uid,
-      lastname,
-      firstname,
-      authProvider: "local",
-      email,
-    });
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
+    return {
+      uid,
+      ...userDocument.data()
+    };
+  } catch (error) {
+    console.error("Error fetching user", error);
   }
-};
-
-const sendPasswordReset = async (email) => {
-  try {
-    await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent!");
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
-};
-const logout = () => {
-  signOut(auth);
-};
-export {
-  auth,
-  db,
-  signInWithGoogle,
-  logInWithEmailAndPassword,
-  registerWithEmailAndPassword,
-  sendPasswordReset,
-  logout,
 };

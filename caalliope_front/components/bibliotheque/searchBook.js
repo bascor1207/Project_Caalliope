@@ -4,29 +4,45 @@ import CardBook from "./cardBook";
 
 const searchBook = () => {
     const dispatch = useDispatch();
-    const [books, setBooks] = useState('');
     const [search, setSearch] = useState('');
-    const [genre, setGenre] = useState('');
+    const [books, setBooks] = useState('');
     const [error, setError] = useState('');
+    const [filteredBooks, setFilteredBooks] = useState('');
 
-    const handleChangeSearch = (event) => {
+    const handleChange = (event) => {
         setSearch(event.target.value);
     };
 
-    const handleChange = (event) => {
-        setGenre(event.target.value);
+    const handleClick = () => {
+        useEffect(() => {
+            fetch("http://openlibrary.org/search.json?q="+search)
+            .then((response) => response.json())
+            .then((books) => setBooks(books))
+            .catch(setError)
+        }, []);
+
+        useEffect(() => {
+            if (search.trim().length > 0) {
+                setFilteredBooks(
+                  books.docs.filter((book) => book.title.toLowerCase().includes(search.toLowerCase()))
+                )
+            } else {
+                setFilteredBooks(heroes);
+            }
+        }, [search, books])
+
+        if (error) {
+            return <pre>{JSON.stringify(error, null, 2)}</pre>
+        } else {
+            <ul>
+                {filteredBooks.map((book) => (
+                    <li>
+                        <CardBook key={book.id} book={book}/>
+                    </li>
+                ))}
+            </ul>
+        }
     };
-
-    useEffect(() => {
-        fetch("http://openlibrary.org/search.json?q="+search+"&subject="+genre)
-        .then((response) => response.json())
-        .then((books) => setBooks(books))
-        .catch(setError)
-    }, []);
-
-    if (error) {
-        return <pre>{JSON.stringify(error, null, 2)}</pre>
-    }
 
     return(
         <div className="card w-75">
@@ -37,38 +53,15 @@ const searchBook = () => {
                     type="search" 
                     placeholder="Recherche" 
                     value={search}
-                    onChange={handleChangeSearch}
+                    onChange={handleChange}
                     aria-label="Search"/>
 
                     <button 
                     className="btn btn-outline-success" 
                     type="submit"
-                    onClick={() => {
-                        books.map((book) => (
-                            <CardBook key={book.id} book={book}/>
-                        ))
-                    }}>
+                    onClick={handleClick}>
                         Rechercher
                     </button>
-            
-                    <div className="dropdown">
-                        <select className="form-select" value={genre} aria-label="Default select example">
-                            <option selected onChange={handleChange}>Genre</option>
-                            <option value="1" onChange={handleChange}>Fantastique</option>
-                            <option value="2" onChange={handleChange}>Science-fiction</option>
-                            <option value="3" onChange={handleChange}>Romance</option>
-                            <option value="4" onChange={handleChange}>Historique</option>
-                            <option value="5" onChange={handleChange}>Thriller</option>
-                            <option value="6" onChange={handleChange}>Polars</option>
-                            <option value="7" onChange={handleChange}>Horreur</option>
-                            <option value="8" onChange={handleChange}>Feel-good</option>
-                            <option value="9" onChange={handleChange}>Aventure</option>
-                            <option value="10" onChange={handleChange}>Espionnage</option>
-                            <option value="11" onChange={handleChange}>Contemporain</option>
-                            <option value="12" onChange={handleChange}>Romance</option>
-                            <option value="13" onChange={handleChange}>Bit-lit</option>
-                        </select>
-                    </div>
                 </form>
             </div>
         </div>

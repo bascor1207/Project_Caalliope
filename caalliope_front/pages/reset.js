@@ -1,41 +1,81 @@
-import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
+import React, { useState, useContext } from "react";
+import { auth } from "../firebase/firebase";
+import { UserContext } from "../firebase/providers/userProvider";
 import Link from "next/link";
-import { auth, sendPasswordResetEmail } from "./firebase";
-import "./Reset.css";
 
-function Reset() {
+const PasswordReset = () => {
   const [email, setEmail] = useState("");
-  const [user, loading, error] = useAuthState(auth);
-  const navigate = useNavigate();
+  const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (loading) return;
-    if (user) router.push("/homePage")
-  }, [user, loading]);
+  const onChangeHandler = event => {
+    const { name, value } = event.currentTarget;
+
+    if (name === "userEmail") {
+      setEmail(value);
+    }
+  };
+
+  const sendResetEmail = event => {
+    event.preventDefault();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+          setEmailHasBeenSent(true);
+        setTimeout(() => {setEmailHasBeenSent(false)}, 3000);
+      })
+      .catch(() => {
+        setError("Error resetting password");
+      });
+  };
   return (
-    <div className="reset">
-      <div className="reset__container">
-        <input
-          type="text"
-          className="reset__textBox"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
-        />
-        <button
-          className="reset__btn"
-          onClick={() => sendPasswordResetEmail(email)}
+    <div className="mt-8">
+      <h1 className="text-xl text-center font-bold mb-3">
+        Reset your Password
+      </h1>
+      <div className="border border-blue-300 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
+        <form action="">
+          {emailHasBeenSent && (
+            <div className="py-3 bg-green-400 w-full text-white text-center mb-3">
+              An email has been sent to you!
+            </div>
+          )}
+          {error !== null && (
+            <div className="py-3 bg-red-600 w-full text-white text-center mb-3">
+              {error}
+            </div>
+          )}
+          <label htmlFor="userEmail" className="w-full block">
+            Email:
+          </label>
+          <input
+            type="email"
+            name="userEmail"
+            id="userEmail"
+            value={email}
+            placeholder="Input your email"
+            onChange={onChangeHandler}
+            className="mb-3 w-full px-1 py-2"
+          />
+          <button
+            className="w-full bg-blue-400 text-white py-3"
+            onClick={event => {
+              sendResetEmail(event);
+            }}
+          >
+            Send me a reset link
+          </button>
+        </form>
+
+        <Link
+          href="/"
+          className="my-2 text-blue-700 hover:text-blue-800 text-center block"
         >
-          Send password reset email
-        </button>
-        <div>
-          Don't have an account? <Link href="/register">Register</Link> now.
-        </div>
+          &larr; back to sign in page
+        </Link>
       </div>
     </div>
   );
-}
+};
 
-export default Reset;
+export default PasswordReset;

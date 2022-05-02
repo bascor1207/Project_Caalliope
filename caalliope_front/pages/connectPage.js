@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, signInWithEmailAndPassword, signInWithGoogle } from "../firebase/firebase";
+import { auth, signInWithGoogle } from "../firebase/firebase";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import FooterCompound from "../compounds/FooterCompound";
@@ -14,7 +13,7 @@ import SignFormText from "../components/SignForm/SignFormText";
 import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormError from "../components/SignForm/SignFormError";
 import styles from '../components/Header/HeaderStyles.module.css';
-import { Button } from "bootstrap";
+import { Button } from "@mui/material";
 import Link from "next/link";
 
 function ConnectForm() {
@@ -22,50 +21,58 @@ function ConnectForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [user, loading, error] = useAuthState(auth);
+  const [error, setError] = useState(null);
 
   const IsInvalid = password === "" || email === "";
 
-  useEffect(() => {
-    if (loading) {
-      return <h2>Loading...</h2>
+  const signInWithEmailAndPasswordHandler = (event,email, password) => {
+    event.preventDefault();
+    auth.signInWithEmailAndPassword(email, password).catch(error => {
+    setError("Error signing in with password and email!");
+      console.error("Error signing in with password and email", error);
+    });
+  };
+
+  const onChangeHandler = (event) => {
+    const {name, value} = event.currentTarget;
+  
+    if(name === 'userEmail') {
+        setEmail(value);
     }
-    if (user) router.push("/homePage")
-  }, [user, loading]);
+    else if(name === 'userPassword'){
+      setPassword(value);
+    }
+  };
 
   return (
     <>
       <HeaderWrapper className={styles['header-wrapper-home']}>
         <NavBar/>
         <SignFormWrapper>
-          <SignFormBase onSubmit={onSubmit} method="POST">
-            <SignFormTitle> Veuillez-vous identifier </SignFormTitle>
+          <SignFormBase method="POST">
+            <SignFormTitle> Sign in </SignFormTitle>
             {error ? <SignFormError>{error}</SignFormError> : null}
             <SignFormInput
               type="text"
               placeholder="Email"
-              value={email}
-              onChange={({ target }) => setEmail(target.value)}
+              onChange={(event) => onChangeHandler(event)}
             />
             <SignFormInput
               type="password"
               placeholder="Password"
               autoComplete="off"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
+              onChange={(event) => onChangeHandler(event)}
             />
             <SignFormButton 
-            disabled={IsInvalid} 
-            onClick={() => signInWithEmailAndPassword(email, password)}>
+            onClick={(event) => {signInWithEmailAndPasswordHandler(event, email, password)}}>
               Login
             </SignFormButton>
-            <Button 
-            className="login_btn login__google"
-            disabled={IsInvalid} 
-            onClick={signInWithGoogle}>
+            <SignFormButton 
+            onClick={() => {
+              signInWithGoogle();
+            }}>
               Login with Google
-            </Button>
+            </SignFormButton>
             <div>
               <Link href="/reset">Forgot Password</Link>
             </div>

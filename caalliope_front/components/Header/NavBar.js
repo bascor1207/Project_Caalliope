@@ -1,22 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import Logo from "./Logo";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, logout } from "../../firebase/firebase";
+import { auth } from "../../firebase/firebase";
+import { UserContext } from "../../firebase/providers/userProvider";
 import SignInButton from "./SigninButton";
 import styles from './Navbar.module.scss';
 import Link from "next/link";
 
 function NavBar({ children, ...restProps }) {
-  const { user, loading, error } = useAuthState();
-  const { userLogged, setUserLogged } = useState(false);
+  const user = useContext(UserContext);
+  const [userLogged, setUserLogged] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      if (user) {
-        setUserLogged(true);
-      }
-    })();
-  }, [userLogged]);
+    if (user) {
+      setUserLogged(true);
+    }
+  }, []);
 
   return (
   <div className={styles.container}>
@@ -33,19 +31,6 @@ function NavBar({ children, ...restProps }) {
     {userLogged ? (
       <>
       <div className="col">
-        <Link href="/userPage" passHref>
-          <span> My space </span>
-        </Link>
-      </div>
-      <div className="col">
-        <Link href="/deconnectPage" passHref>
-          <span> Sign out </span>
-        </Link>
-      </div>
-      </>
-    ) : (
-      <>
-      <div className="col">
         <Link href="/connectPage" passHref>
           <a><SignInButton/></a>
         </Link>
@@ -55,6 +40,15 @@ function NavBar({ children, ...restProps }) {
           <a><span className={styles.sign}> Sign up </span></a>
         </Link>
       </div>
+      </>
+    ) : (
+      <>
+      <div className="col">
+        <Link href="/userPage" passHref>
+          <span> My space </span>
+        </Link>
+      </div>
+      
       </>
     )}
     </div>
