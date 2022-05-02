@@ -1,34 +1,21 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Logo from "./Logo";
 import { useAuth } from "../../context/authUserProvider";
 import SignInButton from "./SigninButton";
 import styles from './Navbar.module.scss';
 import Link from "next/link";
-import Bibliotheque from '../../pages/BrowsePage';
 
 function NavBar({ children, ...restProps }) {
   const { autUser, loading } = useAuth();
+  const { userLogged, setUserLogged } = useState(false);
 
-  const isLog = () => {
-    if (!loading && !autUser){
-      <><div className="col">
-        <Link href="/connect" passHref>
-          <span> Se déconnecter </span>
-        </Link>
-      </div>
-      <div className="col">
-          <Link href="/browse" passHref>
-            <span> Votre compte </span>
-          </Link>
-        </div></>
-    } else {
-      <><div className="col">
-        <Link href="/connect" passHref>
-          <span> Se connecter </span>
-        </Link>
-      </div></>
-    }
-  }
+  useEffect(() => {
+    (async () => {
+      if (loading && autUser) {
+        setUserLogged(true);
+      }
+    })();
+  }, [userLogged]);
 
   return (
   <div className={styles.container}>
@@ -42,17 +29,33 @@ function NavBar({ children, ...restProps }) {
       <a><span> Library </span></a>
     </Link>
     </div>
-    <div className={styles.sign}>
-      <div clasName="col">
-    <a><SignInButton/></a>
-    </div>
-    <></>
-    <div className="col">
-    <Link href="/inscriptionPage" passHref>
-    <a><span className={styles.sign}> Sign up </span></a>
-      </Link>
-    </div>
-    </div>
+    {userLogged ? (
+      <>
+      <div className="col">
+        <Link href="/userPage" passHref>
+          <span> Votre compte </span>
+        </Link>
+      </div>
+      <div className="col">
+        <Link href="/deconnectPage" passHref>
+          <span> Se déconnecter </span>
+        </Link>
+      </div>
+      </>
+    ) : (
+      <>
+      <div className="col">
+        <Link href="/connectPage" passHref>
+          <a><SignInButton/></a>
+        </Link>
+      </div>
+      <div className="col">
+        <Link href="/inscriptionPage" passHref>
+          <a><span className={styles.sign}> Sign up </span></a>
+        </Link>
+      </div>
+      </>
+    )}
     </div>
   )
 }
