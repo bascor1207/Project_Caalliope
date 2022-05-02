@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from "react";
 import Logo from "./Logo";
-import { useAuth } from "../../context/authUserProvider";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, logout } from "../../firebase/firebase";
 import SignInButton from "./SigninButton";
 import styles from './Navbar.module.scss';
 import Link from "next/link";
 
 function NavBar({ children, ...restProps }) {
-  const { autUser, loading } = useAuth();
+  const { user, loading, error } = useAuthState();
   const { userLogged, setUserLogged } = useState(false);
 
   useEffect(() => {
     (async () => {
-      if (loading && autUser) {
+      if (user) {
         setUserLogged(true);
       }
     })();

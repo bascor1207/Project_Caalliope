@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from '../context/authUserProvider';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, registerWithEmailAndPassword, signInWithGoogle } from "../firebase/firebase";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import FooterCompound from "../compounds/FooterCompound";
@@ -11,6 +12,7 @@ import SignFormInput from "../components/SignForm/SignFormInput";
 import SignFormButton from "../components/SignForm/SignFormButton";
 import SignFormError from "../components/SignForm/SignFormError";
 import styles from '../components/Header/HeaderStyles.module.css';
+import Link from "next/link";
 
 function SignUp() {
   const [nom, setNom] = useState("");
@@ -18,29 +20,26 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
   const router = useRouter();
 
-  const { createUserWithEmailAndPassword } = useAuth();
+  const [user, loading, error] = useAuthState(auth);
 
   const IsInvalid = nom === "" || prenom === "" || email === "" || password === "" || confirmPassword === "";
 
-  const onSubmit = event => {
-    setError(null)
-    if(password === confirmPassword)
-      createUserWithEmailAndPassword(email, password)
-      .then(authUser => {
-        console.log("Success. The user is ceated in Firebase")
-        router.push("/homePage")
-      })
-      .catch(error => {
-        setError(error.message)
-      });
-    else 
-      setError("Password do not match")
-    event.preventDefault();
+  const register = () => {
+    if (IsInvalid) alert("Please enter your innformation");
+    if(password === confirmPassword) {
+      registerWithEmailAndPassword(nom, prenom, email, password);
+    }
   };
+
+    useEffect(() => {
+    if (loading) {
+      return <h2>Loading...</h2>
+    }
+    if (user) router.push("/homePage")
+  }, [user, loading]);
 
   return (
     <>
@@ -48,17 +47,17 @@ function SignUp() {
         <NavBar/>
         <SignFormWrapper>
           <SignFormBase onSubmit={onSubmit} method="POST">
-            <SignFormTitle> Créer votre compte </SignFormTitle>
+            <SignFormTitle> Create your account </SignFormTitle>
             {error ? <SignFormError>{error}</SignFormError> : null}
             <SignFormInput
               type="text"
-              placeholder="nom"
+              placeholder="lastname"
               value={nom}
               onChange={({ target }) => setNom(target.value)}
             />
             <SignFormInput
               type="text"
-              placeholder="prenom"
+              placeholder="firstname"
               value={prenom}
               onChange={({ target }) => setPrenom(target.value)}
             />
@@ -77,12 +76,22 @@ function SignUp() {
             />
             <SignFormInput
               type="password"
-              placeholder="Confirmer votre mot de passe"
+              placeholder="confirm your password"
               autoComplete="off"
               value={confirmPassword}
               onChange={({ target }) => setConfirmPassword(target.value)}
             />
-            <SignFormButton disabled={IsInvalid}>S'incrire</SignFormButton>
+            <SignFormButton disabled={IsInvalid} onClick={register}>Register</SignFormButton>
+            <Button 
+            className="register_btn register__google"
+            disabled={IsInvalid} 
+            onClick={signInWithGoogle}>
+              Register with Google
+            </Button>
+            <SignFormText>
+              Already have an account ?
+              <SignFormLink href="/connectPage">Login</SignFormLink> now.
+            </SignFormText>
           </SignFormBase>
         </SignFormWrapper>
       </HeaderWrapper>

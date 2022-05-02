@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from '../context/authUserProvider';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, signInWithEmailAndPassword, signInWithGoogle } from "../firebase/firebase";
 import HeaderWrapper from "../components/Header/HeaderWrapper";
 import NavBar from "../components/Header/NavBar";
 import FooterCompound from "../compounds/FooterCompound";
@@ -13,28 +14,25 @@ import SignFormText from "../components/SignForm/SignFormText";
 import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormError from "../components/SignForm/SignFormError";
 import styles from '../components/Header/HeaderStyles.module.css';
+import { Button } from "bootstrap";
+import Link from "next/link";
 
 function ConnectForm() {
-  const { signInWithEmailAndPassword } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+
+  const [user, loading, error] = useAuthState(auth);
 
   const IsInvalid = password === "" || email === "";
 
-  const onSubmit = event => {
-    setError(null)
-    signInWithEmailAndPassword(email, password)
-    .then(authUser => {
-      router.push("/homePage")
-    })
-    .catch(error => {
-      setError(error.message)
-    });
-    event.preventDefault();
-  };
+  useEffect(() => {
+    if (loading) {
+      return <h2>Loading...</h2>
+    }
+    if (user) router.push("/homePage")
+  }, [user, loading]);
 
   return (
     <>
@@ -57,10 +55,23 @@ function ConnectForm() {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
-            <SignFormButton disabled={IsInvalid} onSubmit={onSubmit} >Valider</SignFormButton>
+            <SignFormButton 
+            disabled={IsInvalid} 
+            onClick={() => signInWithEmailAndPassword(email, password)}>
+              Login
+            </SignFormButton>
+            <Button 
+            className="login_btn login__google"
+            disabled={IsInvalid} 
+            onClick={signInWithGoogle}>
+              Login with Google
+            </Button>
+            <div>
+              <Link href="/reset">Forgot Password</Link>
+            </div>
             <SignFormText>
-              Pas de compte ?
-              <SignFormLink href="/inscriptionPage">Inscrivez-vous !</SignFormLink>
+              Don't have an account ?
+              <SignFormLink href="/inscriptionPage">Register</SignFormLink> now.
             </SignFormText>
           </SignFormBase>
         </SignFormWrapper>
