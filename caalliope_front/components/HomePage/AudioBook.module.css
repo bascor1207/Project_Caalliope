@@ -1,0 +1,12 @@
+.cover{
+    width: 3.125rem;
+    height: 3.125rem;
+}
+
+.audio{
+    text-align: center;
+    width: auto;
+    background-color: lightgrey;
+    border-radius: 10px;
+    border: 5px solid transparent;
+}
