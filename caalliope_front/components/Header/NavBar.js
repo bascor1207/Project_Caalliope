@@ -1,21 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
-import { useAuth } from "../../context/authUserProvider";
+import { auth } from "../../firebase/firebase";
 import SignInButton from "./SigninButton";
 import styles from './Navbar.module.scss';
 import Link from "next/link";
+import { Button } from "@mui/material";
+import {logOut} from '../../pages/utilis/logOut';
 
 function NavBar({ children, ...restProps }) {
-  const { autUser, loading } = useAuth();
-  const { userLogged, setUserLogged } = useState(false);
+  const [userLogged, setUserLogged] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      if (loading && autUser) {
-        setUserLogged(true);
-      }
-    })();
-  }, [userLogged]);
+  const user = auth.currentUser;
+  if (user) {
+    setUserLogged(true);
+  }
 
   return (
   <div className={styles.container}>
@@ -32,19 +30,6 @@ function NavBar({ children, ...restProps }) {
     {userLogged ? (
       <>
       <div className="col">
-        <Link href="/userPage" passHref>
-          <span> Votre compte </span>
-        </Link>
-      </div>
-      <div className="col">
-        <Link href="/deconnectPage" passHref>
-          <span> Se déconnecter </span>
-        </Link>
-      </div>
-      </>
-    ) : (
-      <>
-      <div className="col">
         <Link href="/connectPage" passHref>
           <a><SignInButton/></a>
         </Link>
@@ -53,6 +38,17 @@ function NavBar({ children, ...restProps }) {
         <Link href="/inscriptionPage" passHref>
           <a><span className={styles.sign}> Sign up </span></a>
         </Link>
+      </div>
+      </>
+    ) : (
+      <>
+      <div className="col">
+        <Link href="/userPage" passHref>
+          <span> My space </span>
+        </Link>
+      </div>
+      <div className="col">
+          <Button onClick = {logOut}> Sign out </Button>
       </div>
       </>
     )}

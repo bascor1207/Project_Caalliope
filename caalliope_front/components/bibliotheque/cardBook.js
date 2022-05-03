@@ -6,7 +6,7 @@ const CardBook = ({book}) => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        fetch("http://covers.openlibrary/b/ibsn/{book.ibsn}-M.jpg")
+        fetch("http://covers.openlibrary/b/ibsn/"+book.docs.ibsn+"-M.jpg")
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch(setError)

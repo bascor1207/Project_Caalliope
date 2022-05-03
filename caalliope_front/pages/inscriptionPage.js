@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from '../context/authUserProvider';
-import HeaderWrapper from "../components/Header/HeaderWrapper";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { auth, signInWithGoogle, generateUserDocument } from "../firebase/firebase";
 import NavBar from "../components/Header/NavBar";
+import HeaderWrapper from "../components/Header/HeaderWrapper";
 import FooterCompound from "../compounds/FooterCompound";
 import SignFormWrapper from "../components/SignForm/SignFormWrapper";
 import SignFormBase from "../components/SignForm/SignFormBase";
+import SignFormText from "../components/SignForm/SignFormText";
+import SignFormLink from "../components/SignForm/SignFormLink";
 import SignFormTitle from "../components/SignForm/SignFormTitle";
 import SignFormInput from "../components/SignForm/SignFormInput";
 import SignFormButton from "../components/SignForm/SignFormButton";
@@ -17,29 +20,43 @@ function SignUp() {
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const router = useRouter();
 
-  const { createUserWithEmailAndPassword } = useAuth();
+  const IsInvalid = nom === "" || prenom === "" || email === "" || password === "";
 
-  const IsInvalid = nom === "" || prenom === "" || email === "" || password === "" || confirmPassword === "";
-
-  const onSubmit = event => {
-    setError(null)
-    if(password === confirmPassword)
-      createUserWithEmailAndPassword(email, password)
-      .then(authUser => {
-        console.log("Success. The user is ceated in Firebase")
-        router.push("/homePage")
-      })
-      .catch(error => {
-        setError(error.message)
-      });
-    else 
-      setError("Password do not match")
+  const createUserWithEmailAndPasswordHandler = async (event, email, password) => {
     event.preventDefault();
+    try{
+      const {user} = await createUserWithEmailAndPassword(auth, email, password);
+      generateUserDocument(user, {nom, prenom});
+
+      setPersistence(auth, browserSessionPersistence)
+        .then(() => {
+          return signInWithEmailAndPassword(auth, email, password);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+        })
+        console.log(error);
+
+      router.push("/homePage");
+    }
+    catch(error){
+      var errorMessage = error.message;
+
+      alert(errorMessage);
+
+      console.log(error);
+    }
+      
+    setEmail("");
+    setPassword("");
+    setNom("");
+    setPrenom("");
   };
 
   return (
@@ -47,18 +64,18 @@ function SignUp() {
       <HeaderWrapper className={styles['header-wrapper-home']}>
         <NavBar/>
         <SignFormWrapper>
-          <SignFormBase onSubmit={onSubmit} method="POST">
-            <SignFormTitle> Créer votre compte </SignFormTitle>
+          <SignFormBase method="POST">
+            <SignFormTitle> Create your account </SignFormTitle>
             {error ? <SignFormError>{error}</SignFormError> : null}
             <SignFormInput
               type="text"
-              placeholder="nom"
+              placeholder="lastname"
               value={nom}
               onChange={({ target }) => setNom(target.value)}
             />
             <SignFormInput
               type="text"
-              placeholder="prenom"
+              placeholder="firstname"
               value={prenom}
               onChange={({ target }) => setPrenom(target.value)}
             />
@@ -75,14 +92,27 @@ function SignUp() {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
-            <SignFormInput
-              type="password"
-              placeholder="Confirmer votre mot de passe"
-              autoComplete="off"
-              value={confirmPassword}
-              onChange={({ target }) => setConfirmPassword(target.value)}
-            />
-            <SignFormButton disabled={IsInvalid}>S'incrire</SignFormButton>
+            <SignFormButton 
+            onClick={event => {
+              createUserWithEmailAndPasswordHandler(event, email, password);
+            }}>
+              Register
+              </SignFormButton>
+            <SignFormButton 
+            variant="contained" 
+            onClick={() => {
+              try {
+                signInWithGoogle();
+              } catch (error) {
+                console.error("Error signing in with Google", error);
+              }
+            }}>
+              Register with Google
+            </SignFormButton>
+            <SignFormText>
+              Already have an account ?
+              <SignFormLink href="/connectPage">Login</SignFormLink>now.
+            </SignFormText>
           </SignFormBase>
         </SignFormWrapper>
       </HeaderWrapper>
