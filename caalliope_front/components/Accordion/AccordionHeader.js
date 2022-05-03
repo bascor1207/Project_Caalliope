@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { useContext } from "react";
 import AccordionContext from "./AccordionContext";
 import styles from './AccordionHeader.module.css';

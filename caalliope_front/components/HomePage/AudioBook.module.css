@@ -1,12 +1,24 @@
-.cover{
-    width: 3.125rem;
-    height: 3.125rem;
+.container {
+    display: flex;
+    flex-direction: row;
+
 }
 
-.audio{
+.cover {
+    width: 10rem;
+    height: 10rem;
+    justify-content: center;
+}
+
+.audio {
     text-align: center;
     width: auto;
     background-color: lightgrey;
     border-radius: 10px;
     border: 5px solid transparent;
+}
+
+.col {
+    padding: 3rem 5rem 0 1rem;
+    background-color: lightgrey;
 }

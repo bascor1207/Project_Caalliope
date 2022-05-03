@@ -8,7 +8,7 @@ const AudioBook = () => {
   const [error, setError] = useState("");
   
     useEffect(() => {
-      fetch("https://openlibrary.org/isbn/9780140328721.json")
+      fetch("https://openlibrary.org/works/OL82563W.json")
         .then((response) => response.json())
         .then((book) => setBook(book))
         .catch(setError);
@@ -25,24 +25,27 @@ const AudioBook = () => {
         <ReactAudioPlayer/>
         };
         return(
-          <div className="card mb-3">
-              <div className="row g-0">
-                  <div className="col-md-4">
-                      <img 
-                        src={book.covers} 
-                        className={styles.cover} 
-                        alt="..."/>
-                  </div>
-                  <div className="col-md-8">
-                      <div className="card-body">
-                          <h5 className="card-title">{book.title}</h5>
-                          <button className={styles.audio} onClick={handleClick}>
-                          {"Ecouter l'extrait audio"}
-                          </button>
-                      </div>
-                  </div>
-              </div>
+        <>
+          <div className={styles.container}>
+            <div className="col">
+               <img 
+                  src="https://covers.openlibrary.org/b/id/8483863-L.jpg"
+                  className={styles.cover} 
+                  alt={book.title}/>
+            </div>
+            <div className={styles.col}>
+              <span>{book.description}</span>
+            </div>
           </div>
+          <div className="col">
+            <div className="card-body">
+                <h3 className="card-title">{book.title}</h3>
+                  <button className={styles.audio} onClick={handleClick}>
+                    {"Ecouter l'extrait audio"} 
+                  </button>
+            </div>
+          </div>
+        </>
       );
   }
   
