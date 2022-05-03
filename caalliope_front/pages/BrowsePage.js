@@ -4,7 +4,7 @@ import NavBar from "../components/Header/NavBar";
 import FeatureWrapper from "../components/Header/FeatureWrapper";
 import FeatureSubTitle from "../components/Header/FeatureSubTitle";
 import FooterCompound from "../compounds/FooterCompound";
-import SearchBook from '../components/bibliotheque/searchBook';
+import SearchBookList from "../components/bibliotheque/searchBookList";
 
 function BrowsePage() {
   return (
@@ -15,7 +15,7 @@ function BrowsePage() {
         <FeatureSubTitle>
             Rechercher un livre
         </FeatureSubTitle>
-        <SearchBook />
+        <SearchBookList />
         </FeatureWrapper>
       </HeaderWrapper>
       <FooterCompound />

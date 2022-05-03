@@ -2,48 +2,65 @@ import React, {useEffect, useState} from 'react';
 import CardBook from "./cardBook";
 import {useDispatch} from "react-redux";
 
-const SearchBookList = ({search}) => {
+const SearchBookList = () => {
   const dispatch = useDispatch();
+  const [search, setSearch] = useState('');
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [books, setBooks] = useState();
+  const [error, setError] = useState();
 
-    useEffect(() => {
-        fetch("http://openlibrary.org/search.json?q="+search)
+    const fetchBook = () => {
+      fetch("http://openlibrary.org/search.json?q="+search)
         .then((response) => response.json())
         .then((books) => setBooks(books))
         .catch(setError)
-        console.log(error);
-    }, []);
+      console.log(error);
 
-    useEffect(() => {
+      for (let i=0; i<20; i++) {
+        console.log(search)
         if (search.trim().length > 0) {
-            setFilteredBooks(
-            books.docs.filter((book) => book.title.toLowerCase().includes(search.toLowerCase()))
-            )
+          setFilteredBooks(
+          books.docs[i].filter((book) => book.title.toLowerCase().includes(search.toLowerCase()))
+          )
         } else {
-            setFilteredBooks(books);
+          setFilteredBooks(books);
         }
-    }, [search, books])
-
-    if (error) {
-        return <pre>{JSON.stringify(error, null, 2)}</pre>
-    } else {
-        <ul>
-            {filteredBooks.map((book) => (
-                <li>
-                    <CardBook key={book.id} book={book}/>
-                </li>
-            ))}
-        </ul>
+      }
     }
 
-  return (
-    <div className="books-list">
-      {fetchBooks.map((book) => (
-        <CardBook key={book.id} book={book}/>
-      ))}
-    </div>
-  );
+    const handleChange = (event) => {
+      setSearch(event.target.value);
+    }
+
+    return (
+      <><div className="card w-75">
+          <div className="card-body">
+            <form className="d-flex">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Recherche"
+                value={search}
+                onChange={handleChange}
+                aria-label="Search" />
+  
+              <button
+                className="btn btn-outline-success"
+                type="submit"
+                onClick={fetchBook}>
+                Rechercher
+              </button>
+            </form>
+          </div>
+        </div>
+        <ul>
+            {filteredBooks.map((book) => (
+              <li>
+                <CardBook key={book.id} book={book} />
+              </li>
+            ))}
+          </ul></>
+    );
 };
 
 export default SearchBookList;
