@@ -1,14 +1,13 @@
-import navBar from "./navBar";
+import LeftNavBar from "./navBar";
 
 const userCard = ({user}) => {
     return(
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap"/>
+        <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{user.nom} {user.prenom}</h5>
+                <h5 class="card-title">{user}</h5>
             </div>
             <ul class="list-group list-group-flush">
-                < navBar />
+                < LeftNavBar />
             </ul>
         </div>
     );

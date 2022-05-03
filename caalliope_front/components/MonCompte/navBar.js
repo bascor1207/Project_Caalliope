@@ -1,33 +1,37 @@
+import AccueilCard from './Accueil/AccueilCard';
+import UserInfo from './Infos/userInfo';
+import LecturesCard from './EnCours/lecturesCard';
+import Link from "next/link";
 
-const navBar = () => {
+const LeftNavBar = () => {
     return(
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="">Accueil</a>
+                <Link href="/userAccueil">Accueil</Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Mes lectures</a>
+                <Link href="/lecturesCard">Mes lectures</Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Ma pile à lire</a>
+                <Link href="/">Ma pile à lire</Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Mes livres lus</a>
+                <Link href="/">Mes livres lus</Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Livres abandonnés</a>
+                <Link href="/">Livres abandonnés</Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Mes Sagas</a>
+                <Link href="/">Mes Sagas</Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Wishlist</a>
+                <Link href="/">Wishlist</Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Mes informations</a>
+                <Link href="/userInfo">Mes informations</Link>
             </li>
         </ul>
     );
 }
 
-export default navBar;
+export default LeftNavBar;

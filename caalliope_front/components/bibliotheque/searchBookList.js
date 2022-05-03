@@ -17,7 +17,6 @@ const SearchBookList = () => {
       console.log(error);
 
       for (let i=0; i<20; i++) {
-        console.log(search)
         if (search.trim().length > 0) {
           setFilteredBooks(
           books.docs[i].filter((book) => book.title.toLowerCase().includes(search.toLowerCase()))

@@ -66,7 +66,7 @@ function NavBar({ children, ...restProps }) {
         </Link>
       </div>
       <div className="col">
-          <Button onClick = {logOut}> Sign out </Button>
+          <button onClick = {logOut}> Sign out </button>
       </div>
       </>
     )}

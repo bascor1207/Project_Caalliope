@@ -4,9 +4,9 @@ import FeatureWrapper from "../components/Header/FeatureWrapper";
 import FeatureSubTitle from "../components/Header/FeatureSubTitle";
 import FooterCompound from "../compounds/FooterCompound";
 import NavBar from "../components/Header/NavBar";
-import UserCard from '../components/MonCompte/userCard';
+import AccueilCard from '../components/MonCompte/Accueil/AccueilCard';
 
-const userPage = () => {
+const userAccueil = () => {
   const user = auth.currentUser;
   if (user) {
     console.log(user)
@@ -17,7 +17,7 @@ const userPage = () => {
         <HeaderWrapper>
           <NavBar/>
           <FeatureWrapper>
-            <UserCard user={user}/>
+            <AccueilCard user={user}/>
           </FeatureWrapper>
         </HeaderWrapper>
         <FooterCompound />
@@ -25,4 +25,4 @@ const userPage = () => {
     );
 }
 
-export default userPage;
+export default userAccueil;
