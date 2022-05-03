@@ -15,12 +15,12 @@ const firebaseConfig = {
 var firebaseApp = null;
 
 // Initialize Firebase
-if (!getApps().length) {
-  firebaseApp = initializeApp(firebaseConfig, "caalliope");
+/*if (!getApps().length) {
+  firebaseApp = initializeApp(firebaseConfig);
 } else {
   firebaseApp = getApp();
-}
-
+}*/
+firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 export const firestore = getFirestore(firebaseApp);
 

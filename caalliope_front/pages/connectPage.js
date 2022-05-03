@@ -29,6 +29,7 @@ function ConnectForm() {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
     .then((user) => {
+      sessionStorage.setItem('user', user);
       console.log('User', user, 'logged!');
       router.push("/homePage");
     })

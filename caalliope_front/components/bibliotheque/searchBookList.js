@@ -21,7 +21,7 @@ const SearchBookList = ({search}) => {
             books.docs.filter((book) => book.title.toLowerCase().includes(search.toLowerCase()))
             )
         } else {
-            setFilteredBooks(heroes);
+            setFilteredBooks(books);
         }
     }, [search, books])
 

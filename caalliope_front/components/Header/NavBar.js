@@ -5,15 +5,33 @@ import SignInButton from "./SigninButton";
 import styles from './Navbar.module.scss';
 import Link from "next/link";
 import { Button } from "@mui/material";
-import {logOut} from '../../pages/utilis/logOut';
+import { signOut } from "firebase/auth";
+import { useRouter  } from "next/router";
 
 function NavBar({ children, ...restProps }) {
   const [userLogged, setUserLogged] = useState(false);
+
+  const router = useRouter();
 
   const user = auth.currentUser;
   if (user) {
     setUserLogged(true);
   }
+
+  const logOut = (e) => {
+    e.preventDefault();
+    
+    signOut(auth).then(function() {
+      setUserLogged(false);
+      console.log("Successfully signed out.");
+      
+      router.push("/homePage");
+    }).catch(function(error) {
+      console.log(error);
+      console.log("An error occured");
+    })
+  }
+  
 
   return (
   <div className={styles.container}>
