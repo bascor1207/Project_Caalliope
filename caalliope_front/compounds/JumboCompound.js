@@ -10,23 +10,25 @@ import CarouselDesktop from "../components/HomePage/Carousel";
 import AudioBook from "../components/HomePage/AudioBook";
 import NewBookList from "../components/HomePage/NewBookList";
 import TopBookList from "../components/HomePage/TopBookList";
+import HomeCarousel from "../components/HomePage/Carousel";
 
 function JumboCompound() {
   return (
     <JumboWrapper>
-      {JumboData.map((item) => (
-        <>
-        <AudioBook/>
-          <JumboItem key={item.id}>
-            <JumboSubTitle>
-              <NewBookList/>
-            </JumboSubTitle>
-            <TopBookList/>
-          </JumboItem>
-          <Seperator />
-        </>
-      ))}
-    </JumboWrapper>
+      <AudioBook/>
+        {JumboData.map((item) => (
+          <>
+            <JumboItem key={item.id}>
+              <JumboSubTitle>
+                <NewBookList/>
+                <HomeCarousel/>
+              </JumboSubTitle>
+              <TopBookList/>
+            </JumboItem>
+            <Seperator />
+          </>
+        ))}
+   </JumboWrapper>
   );
 }
 

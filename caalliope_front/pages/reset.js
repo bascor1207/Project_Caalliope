@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { auth } from "../firebase/firebase";
-import { UserContext } from "../firebase/providers/userProvider";
+import { UserContext } from "../firebase/providers/UserProvider";
 import Link from "next/link";
 
 const PasswordReset = () => {

@@ -1,39 +1,42 @@
-import React, { Component } from 'react';
-import { Carousel } from 'react-responsive-carousel';
+import React, { useEffect, useState } from 'react';
+import styles from './Carousel.module.css';
 
-export default class NextJsCarousel extends Component {
-	render() {
+//fetch un tableau de livre avec l'ancienne api
+const HomeCarousel = () =>{
+		const [book, setBook] = useState("");
+  		const [error, setError] = useState("");
+  
+    useEffect(() => {
+      fetch("https://openlibrary.org/works/OL82563W.json")
+        .then((response) => response.json())
+        .then((book) => setBook(book))
+        .catch(setError);
+    }, []);
 		return (
-			<div>
-			<h2>NextJs Carousel - GeeksforGeeks</h2>
-			<Carousel>
-				<div>
-					<img src={book.items.volumeId.imageLinks.thumbnail} alt="image1"/>
-					<p className="legend">Image 1</p>
-
+			<div className={styles.carousel}>
+				<div className={styles.col}>
+					<img src="https://covers.openlibrary.org/b/id/8483863-M.jpg" alt={book.title}/>
 				</div>
-				<div>
-					<img src={book.items.volumeId.imageLinks.thumbnail} alt="image2" />
-					<p className="legend">Image 2</p>
-
+				<div className={styles.col}>
+					<img src="https://covers.openlibrary.org/b/id/8483863-M.jpg" alt={book.title} />
 				</div>
-				<div>
-					<img src={book.items.volumeId.imageLinks.thumbnail}  alt="image3"/>
-					<p className="legend">Image 3</p>
-
+				<div className={styles.col}>
+					<img src="https://covers.openlibrary.org/b/id/8483863-M.jpg"  alt={book.title}/>
 				</div>
-				<div>
-					<img src={book.items.volumeId.imageLinks.thumbnail}  alt="image4"/>
-					<p className="legend">Image 4</p>
-
+				<div className={styles.col}>
+					<img src="https://covers.openlibrary.org/b/id/8483863-M.jpg"  alt={book.title}/>
 				</div>
-				<div>
-					<img src={book.items.volumeId.imageLinks.thumbnail} alt="image5"/>
-					<p className="legend">Image 5</p>
-
+				<div className={styles.col}>
+					<img src="https://covers.openlibrary.org/b/id/8483863-M.jpg" alt={book.title}/>
 				</div>
-			</Carousel>
+				<div className={styles.col}>
+					<img src="https://covers.openlibrary.org/b/id/8483863-M.jpg" alt={book.title}/>
+				</div>
+				<div className={styles.col}>
+					<img src="https://covers.openlibrary.org/b/id/8483863-M.jpg" alt={book.title}/>
+				</div>
 			</div>
 		);
 	}
-};
+
+export default HomeCarousel;
